@@ -33,6 +33,29 @@
             "related": ".pdb;.xml"
           }
         }
+      },
+      "TooDoo.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "TooDoo.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TooDoo.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TooDoo.Core.dll": {}
+        }
+      },
+      "TooDoo.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/TooDoo.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TooDoo.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -67,11 +90,22 @@
         "microsoft.openapi.1.6.17.nupkg.sha512",
         "microsoft.openapi.nuspec"
       ]
+    },
+    "TooDoo.Core/1.0.0": {
+      "type": "project",
+      "path": "../TooDoo.Core/TooDoo.Core.csproj",
+      "msbuildProject": "../TooDoo.Core/TooDoo.Core.csproj"
+    },
+    "TooDoo.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../TooDoo.Infrastructure/TooDoo.Infrastructure.csproj",
+      "msbuildProject": "../TooDoo.Infrastructure/TooDoo.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Microsoft.AspNetCore.OpenApi >= 9.0.2"
+      "Microsoft.AspNetCore.OpenApi >= 9.0.2",
+      "TooDoo.Core >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -99,7 +133,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Core/TooDoo.Core.csproj": {
+              "projectPath": "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Core/TooDoo.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
