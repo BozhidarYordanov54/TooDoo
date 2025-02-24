@@ -1,0 +1,43 @@
+.site-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ededed;
+    width: 600px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 999999px;
+    font-size: 16px;
+    margin-top: 1em;
+}
+
+.logo{
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.logo-wrapper{
+    padding: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.site-nav{
+    padding-right: 1.5em;
+}
+
+.site-nav .nav-list{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1em;
+}
+
+.site-nav .nav-list a{
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+}
