@@ -116,7 +116,7 @@
 }
 
 .subject:nth-child(odd) .icon {
-    animation: float 20s linear infinite reverse;
+    animation: float 30s linear infinite reverse;
 }
 
 @keyframes float {
@@ -124,35 +124,71 @@
         transform: translate(0, -50px) scale(1);
     }
 
+    6.25% {
+        transform: translate(19px, -46px) scale(1.02);
+    }
+
     12.5% {
-        transform: translate(35.36px, -35.36px);
+        transform: translate(35.36px, -35.36px) scale(1.03);
+    }
+
+    18.75% {
+        transform: translate(46px, -19px) scale(1.02);
     }
 
     25% {
-        transform: translate(50px, 0);
+        transform: translate(50px, 0) scale(1);
+    }
+
+    31.25% {
+        transform: translate(46px, 19px) scale(0.98);
     }
 
     37.5% {
-        transform: translate(35.36px, 35.36px);
+        transform: translate(35.36px, 35.36px) scale(0.97);
+    }
+
+    43.75% {
+        transform: translate(19px, 46px) scale(0.98);
     }
 
     50% {
-        transform: translate(0, 50px);
+        transform: translate(0, 50px) scale(1);
+    }
+
+    56.25% {
+        transform: translate(-19px, 46px) scale(1.02);
     }
 
     62.5% {
-        transform: translate(-35.36px, 35.36px);
+        transform: translate(-35.36px, 35.36px) scale(1.03);
+    }
+
+    68.75% {
+        transform: translate(-46px, 19px) scale(1.02);
     }
 
     75% {
-        transform: translate(-50px, 0);
+        transform: translate(-50px, 0) scale(1);
+    }
+
+    81.25% {
+        transform: translate(-46px, -19px) scale(0.98);
     }
 
     87.5% {
-        transform: translate(-35.36px, -35.36px);
+        transform: translate(-35.36px, -35.36px) scale(0.97);
+    }
+
+    93.75% {
+        transform: translate(-19px, -46px) scale(0.98);
     }
 
     100% {
         transform: translate(0, -50px) scale(1);
     }
+}
+
+.floating {
+    animation: float 5s infinite ease-in-out;
 }
