@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
 
@@ -22,9 +23,9 @@ namespace TooDoo.Core.Services
             throw new NotImplementedException();
         }
 
-        public async Task<string> Register(string email, string password, string? returnUrl = null)
+        public async Task<string> Register(UserRegisterModel model, string? returnUrl = null)
         {
-            bool userExists = await UserExists(email);
+            bool userExists = await UserExists(model.Email);
 
             if (userExists == true)
             {
@@ -32,21 +33,20 @@ namespace TooDoo.Core.Services
             }
 
             User user = new User();
-            user.FirstName = "Test";
-            user.LastName = "User";
-            user.Email = email;
-            user.UserName = email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.UserName;
 
-            await _userManager.CreateAsync(user, password);
+            await _userManager.CreateAsync(user, model.Password);
 
 
-            return GenerateToken(email);
+            return GenerateToken(model.Email);
         }
 
         private async Task<bool> UserExists(string email)
         {
             //* This is a simple check to see if a user with the given email exists
-            //*
             return await _userManager.FindByEmailAsync(email) != null;
         }
 

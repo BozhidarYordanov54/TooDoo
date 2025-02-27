@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TooDoo.Core.Models.User;
 using TooDoo.Core.Services;
 using TooDoo.Core.Services.Contracts;
 
@@ -20,11 +21,11 @@ namespace TooDoo.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
         {
             _logger.LogWarning("Currently in RegisterController.Register()");
 
-            string token = await _authenticationService.Register("testmail@mail.com", "Password1324!");
+            string token = await _authenticationService.Register(model);
 
             return Ok(token);
         }
