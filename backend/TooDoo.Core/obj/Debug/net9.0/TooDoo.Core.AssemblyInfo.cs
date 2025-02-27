@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TooDoo.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7701135ed25c8a9ff8e1c5e3bac88786ae0fe418")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebc4b98774fbb34344bf502998a9c3aa7d52e90f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TooDoo.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TooDoo.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

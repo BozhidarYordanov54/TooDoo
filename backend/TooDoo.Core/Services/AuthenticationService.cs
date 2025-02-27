@@ -1,8 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using TooDoo.Core.Models.Methods;
 using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
@@ -18,14 +20,33 @@ namespace TooDoo.Core.Services
             _userManager = userManager;
         }
 
-        public Task<string> Authenticate(string email, string password)
+        public async Task<MethodResponse> Login(UserLoginModel model, string? returnUrl = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.UserName))
+            {
+                return new MethodResponse(false, "Email or username is required", "api/authentication/login", null, null);
+            }
+
+            User? user = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.UserName);
+
+            if (UserExists(model.Email, model.UserName).Result == false)
+            {
+                return new MethodResponse(false, "User does not exist", "api/authentication/login", null, null);
+            }
+
+            bool passwordMatch = await _userManager.CheckPasswordAsync(user, model.Password);
+
+            if (passwordMatch == false)
+            {
+                return new MethodResponse(false, "Password is incorrect", "api/authentication/login", null, null);
+            }
+
+            return new MethodResponse(GenerateToken(model.Email));
         }
 
         public async Task<string> Register(UserRegisterModel model, string? returnUrl = null)
         {
-            bool userExists = await UserExists(model.Email);
+            bool userExists = await UserExists(model.Email, model.UserName);
 
             if (userExists == true)
             {
@@ -40,20 +61,20 @@ namespace TooDoo.Core.Services
 
             await _userManager.CreateAsync(user, model.Password);
 
-
             return GenerateToken(model.Email);
         }
 
-        private async Task<bool> UserExists(string email)
+        private async Task<bool> UserExists(string email, string userName)
         {
             //* This is a simple check to see if a user with the given email exists
-            return await _userManager.FindByEmailAsync(email) != null;
+            return await _userManager.FindByEmailAsync(email) != null ||
+                    await _userManager.FindByNameAsync(userName) != null;
         }
 
         private string GenerateToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = "ForTheLoveOfGodStoreAndLoadThisSecurely"u8.ToArray();
+            byte[] key = Encoding.UTF8.GetBytes("ForTheLoveOfGodStoreAndLoadThisSecurely");
 
             var claims = new List<Claim>
             {
