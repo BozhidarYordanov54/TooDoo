@@ -1,26 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Infrastructure/TooDoo.Infrastructure.csproj": {}
+    "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Infrastructure/TooDoo.Infrastructure.csproj": {
+    "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Infrastructure/TooDoo.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
         "projectName": "TooDoo.Infrastructure",
-        "projectPath": "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Infrastructure/TooDoo.Infrastructure.csproj",
-        "packagesPath": "/home/bozhidar/.nuget/packages/",
-        "outputPath": "/home/bozhidar/Codes/TooDoo/backend/TooDoo.Infrastructure/obj/",
+        "projectPath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\smvh\\.nuget\\packages\\",
+        "outputPath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/bozhidar/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\smvh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "/usr/lib/dotnet/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,6 +49,20 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -60,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

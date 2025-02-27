@@ -1,0 +1,16 @@
+D:\Codes\TooDoo\backend\TooDoo.Core\bin\Debug\net9.0\TooDoo.Core.deps.json
+D:\Codes\TooDoo\backend\TooDoo.Core\bin\Debug\net9.0\TooDoo.Core.dll
+D:\Codes\TooDoo\backend\TooDoo.Core\bin\Debug\net9.0\TooDoo.Core.pdb
+D:\Codes\TooDoo\backend\TooDoo.Core\bin\Debug\net9.0\TooDoo.Infrastructure.dll
+D:\Codes\TooDoo\backend\TooDoo.Core\bin\Debug\net9.0\TooDoo.Infrastructure.pdb
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.csproj.AssemblyReference.cache
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.AssemblyInfoInputs.cache
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.AssemblyInfo.cs
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.csproj.CoreCompileInputs.cache
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.sourcelink.json
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.C.23A96D52.Up2Date
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.dll
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\refint\TooDoo.Core.dll
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\TooDoo.Core.pdb
+D:\Codes\TooDoo\backend\TooDoo.Core\obj\Debug\net9.0\ref\TooDoo.Core.dll

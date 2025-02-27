@@ -1,0 +1,13 @@
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\bin\Debug\net9.0\TooDoo.Infrastructure.deps.json
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\bin\Debug\net9.0\TooDoo.Infrastructure.dll
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\bin\Debug\net9.0\TooDoo.Infrastructure.pdb
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.AssemblyInfoInputs.cache
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.AssemblyInfo.cs
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.sourcelink.json
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.dll
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\refint\TooDoo.Infrastructure.dll
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.pdb
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\ref\TooDoo.Infrastructure.dll
+D:\Codes\TooDoo\backend\TooDoo.Infrastructure\obj\Debug\net9.0\TooDoo.Infrastructure.csproj.AssemblyReference.cache
