@@ -42,20 +42,27 @@ namespace TooDoo.Extensions
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(o =>
+            .AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
                 {
-                    o.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey("ForTheLoveOfGodStoreAndLoadThisSecurely"u8.ToArray()),
-                        ValidIssuer = "https://toodoo.com",
-                        ValidAudience = "https://toodoo.com",
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+                    IssuerSigningKey = new SymmetricSecurityKey("ForTheLoveOfGodStoreAndLoadThisSecurely"u8.ToArray()),
+                    ValidIssuer = "https://toodoo.com",
+                    ValidAudience = "https://toodoo.com",
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            services.AddSession(o => 
+            {
+                o.IdleTimeout = TimeSpan.FromMinutes(30);
+                o.Cookie.HttpOnly = true;
+                o.Cookie.IsEssential = true;
+            });
 
             services.AddAuthorization();
 
