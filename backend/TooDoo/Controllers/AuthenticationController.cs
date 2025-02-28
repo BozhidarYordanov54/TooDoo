@@ -26,6 +26,11 @@ namespace TooDoo.Controllers
         {
             var response = await _authenticationService.Register(model);
 
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+
             return Ok(response.Message);
         }
 
@@ -44,11 +49,11 @@ namespace TooDoo.Controllers
         [Authorize]
         public async Task<IActionResult> Refresh()
         {
-            string refreshToken = HttpContext.Request.Headers["refresh_token"];
+            string refreshToken = HttpContext.Request.Headers["refresh_token"].ToString() ?? string.Empty;
             if (string.IsNullOrEmpty(refreshToken))
                 return Unauthorized();
 
-            string userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            string userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value ?? string.Empty;
 
             var userLoginModel = new UserRefreshTokenModel { Email = userEmail, RefreshToken = refreshToken };
             var response = await _authenticationService.RefreshToken(userLoginModel);
@@ -59,6 +64,7 @@ namespace TooDoo.Controllers
 
             return Ok(new {response.Token, response.RefreshToken, response.Message});
         }
+
         private void SetCookies(HttpContext context, string accessToken, string refreshToken)
         {
             context.Response.Cookies.Append("access_token", accessToken, new CookieOptions

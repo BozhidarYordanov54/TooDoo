@@ -6,8 +6,8 @@ namespace TooDoo.Core.Models.Methods
         public string? Message { get; set; }
         public object? Data { get; set; }
         public string? returnUrl { get; set; }
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
+        public string Token { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
 
         public MethodResponse(bool success,string token, string refreshToken)
         {
