@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using TooDoo.Core.Contracts;
 using TooDoo.Core.Services;
 using TooDoo.Core.Services.Contracts;
+using TooDoo.Infrastructure.Common;
 using TooDoo.Infrastructure.Data;
 using TooDoo.Infrastructure.Data.Models;
 
@@ -25,7 +27,10 @@ namespace TooDoo.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IRepository, Repository>();
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
 
             return services;
         }
@@ -57,12 +62,12 @@ namespace TooDoo.Extensions
                 };
             });
 
-            services.AddSession(o => 
-            {
-                o.IdleTimeout = TimeSpan.FromMinutes(30);
-                o.Cookie.HttpOnly = true;
-                o.Cookie.IsEssential = true;
-            });
+            // services.AddSession(o => 
+            // {
+            //     o.IdleTimeout = TimeSpan.FromMinutes(30);
+            //     o.Cookie.HttpOnly = true;
+            //     o.Cookie.IsEssential = true;
+            // });
 
             services.AddAuthorization();
 
