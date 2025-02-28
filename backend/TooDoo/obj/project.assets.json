@@ -4681,11 +4681,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Codes\\TooDoo\\backend\\TooDoo\\TooDoo.csproj",
+      "projectUniqueName": "d:\\Codes\\TooDoo\\backend\\TooDoo\\TooDoo.csproj",
       "projectName": "TooDoo",
-      "projectPath": "D:\\Codes\\TooDoo\\backend\\TooDoo\\TooDoo.csproj",
+      "projectPath": "d:\\Codes\\TooDoo\\backend\\TooDoo\\TooDoo.csproj",
       "packagesPath": "C:\\Users\\smvh\\.nuget\\packages\\",
-      "outputPath": "D:\\Codes\\TooDoo\\backend\\TooDoo\\obj\\",
+      "outputPath": "d:\\Codes\\TooDoo\\backend\\TooDoo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4706,8 +4706,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj": {
-              "projectPath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj"
+            "d:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj": {
+              "projectPath": "d:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj"
             }
           }
         }
