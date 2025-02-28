@@ -1,29 +1,25 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using TooDoo.Core.Models.Methods;
 using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
-using System.Collections.Concurrent;
 
 namespace TooDoo.Core.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
 
         private const string JWT_SECRET = "ForTheLoveOfGodStoreAndLoadThisSecurely"; // TODO: Move to appsettings.json
         private const int ACCESS_TOKEN_EXPIRY_MINUTES = 15;
 
-        public AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthenticationService(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -72,10 +68,6 @@ namespace TooDoo.Core.Services
 
             return new MethodResponse(true, "Succesfull registration", "api/authentication/login");
         }
-
-        /// <summary>
-        /// Logs out the user by revoking tokens
-        /// </summary>
 
         /// <summary>
         /// Refreshes the JWT token using the refresh token
