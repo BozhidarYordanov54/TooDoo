@@ -30,3 +30,10 @@ backend/TooDoo/appsettings.json
 
 backend/TooDoo/bin/
 backend/TooDoo/obj/
+
+backend/TooDoo.Core/bin/
+backend/TooDoo.Core/obj/
+
+backend/TooDoo.Infrastructure/bin/
+backend/TooDoo.Infrastructure/obj/
+
