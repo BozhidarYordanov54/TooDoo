@@ -1,100 +1,143 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using TooDoo.Core.Models.Methods;
 using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
+using System.Collections.Concurrent;
 
 namespace TooDoo.Core.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthenticationService(UserManager<User> userManager)
+        private const string JWT_SECRET = "ForTheLoveOfGodStoreAndLoadThisSecurely"; // TODO: Move to appsettings.json
+        private const int ACCESS_TOKEN_EXPIRY_MINUTES = 15;
+
+        public AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<MethodResponse> Login(UserLoginModel model, string? returnUrl = null)
+        /// <summary>
+        /// Logs in a user and generates a JWT token
+        /// </summary>
+        public async Task<MethodResponse> Login(UserLoginModel model)
         {
-            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.UserName))
-            {
-                return new MethodResponse(false, "Email or username is required", "api/authentication/login", null, null);
-            }
+            var user = await _userManager.FindByEmailAsync(model.Email ?? "")
+                    ?? await _userManager.FindByNameAsync(model.UserName ?? "");
 
-            User? user = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.UserName);
-
-            if (UserExists(model.Email, model.UserName).Result == false)
-            {
-                return new MethodResponse(false, "User does not exist", "api/authentication/login", null, null);
-            }
+            if (user == null)
+                return new MethodResponse(false, "User does not exist", "api/authentication/login");
 
             bool passwordMatch = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordMatch)
+                return new MethodResponse(false, "Password is incorrect", "api/authentication/login");
 
-            if (passwordMatch == false)
-            {
-                return new MethodResponse(false, "Password is incorrect", "api/authentication/login", null, null);
-            }
+            string accessToken = GenerateAccessToken(user);
+            string refreshToken = GenerateRefreshToken();
 
-            return new MethodResponse(GenerateToken(model.Email));
+            return new MethodResponse(true, accessToken, refreshToken);
         }
 
-        public async Task<string> Register(UserRegisterModel model, string? returnUrl = null)
+        /// <summary>
+        /// Registers a new user
+        /// </summary>
+        public async Task<MethodResponse> Register(UserRegisterModel model)
         {
-            bool userExists = await UserExists(model.Email, model.UserName);
-
-            if (userExists == true)
-            {
+            if (await UserExists(model.Email, model.UserName))
                 throw new Exception("User already exists");
+
+            var user = new User
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.UserName
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                string errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return new MethodResponse(false, errors, "api/authentication/register");
             }
 
-            User user = new User();
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            user.UserName = model.UserName;
-
-            await _userManager.CreateAsync(user, model.Password);
-
-            return GenerateToken(model.Email);
+            return new MethodResponse(true, "Succesfull registration", "api/authentication/login");
         }
 
+        /// <summary>
+        /// Logs out the user by revoking tokens
+        /// </summary>
+
+        /// <summary>
+        /// Refreshes the JWT token using the refresh token
+        /// </summary>
+        public async Task<MethodResponse> RefreshToken(UserRefreshTokenModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email ?? "") ?? 
+                await _userManager.FindByNameAsync(model.Email ?? "");
+
+            if (user == null)
+                return new MethodResponse(false, "User does not exist", "api/authentication/login");
+
+            string newAccessToken = GenerateAccessToken(user);
+            string newRefreshToken = GenerateRefreshToken();
+
+            return new MethodResponse(true, newAccessToken, newRefreshToken);
+        }
+
+        /// <summary>
+        /// Checks if a user exists by email or username
+        /// </summary>
         private async Task<bool> UserExists(string email, string userName)
         {
-            //* This is a simple check to see if a user with the given email exists
             return await _userManager.FindByEmailAsync(email) != null ||
                     await _userManager.FindByNameAsync(userName) != null;
         }
 
-        private string GenerateToken(string email)
+        /// <summary>
+        /// Generates an access token (JWT)
+        /// </summary>
+        private string GenerateAccessToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.UTF8.GetBytes("ForTheLoveOfGodStoreAndLoadThisSecurely");
+            var key = Encoding.UTF8.GetBytes(JWT_SECRET);
 
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, email),
-                new(JwtRegisteredClaimNames.Email, email),
+                new(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
+                new(JwtRegisteredClaimNames.Email, user.UserName ?? string.Empty),
+                new("UserId", user.Id)
             };
 
-            var tokenDescriptopr = new SecurityTokenDescriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddMinutes(ACCESS_TOKEN_EXPIRY_MINUTES),
                 Issuer = "https://toodoo.com",
                 Audience = "https://toodoo.com",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptopr);
-
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        /// <summary>
+        /// Generates a refresh token
+        /// </summary>
+        private string GenerateRefreshToken()
+        {
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
     }
 }
