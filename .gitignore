@@ -28,3 +28,5 @@ dist-ssr
 backend/TooDoo/appsettings.Development.json
 backend/TooDoo/appsettings.json
 
+backend/TooDoo/bin/
+backend/TooDoo/obj/
