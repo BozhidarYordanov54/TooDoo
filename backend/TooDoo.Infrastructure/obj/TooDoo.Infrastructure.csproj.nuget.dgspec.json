@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {}
+    "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {}
   },
   "projects": {
-    "d:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {
+    "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
         "projectName": "TooDoo.Infrastructure",
-        "projectPath": "d:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
+        "projectPath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\TooDoo.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\smvh\\.nuget\\packages\\",
-        "outputPath": "d:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\obj\\",
+        "outputPath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y50UjaoQWGc=",
+  "dgSpecHash": "Q3eLt4jaoRA=",
   "success": true,
-  "projectFilePath": "d:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj",
+  "projectFilePath": "D:\\Codes\\TooDoo\\backend\\TooDoo.Core\\TooDoo.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\smvh\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\smvh\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
