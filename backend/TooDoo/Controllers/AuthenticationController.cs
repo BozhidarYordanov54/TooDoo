@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using Microsoft.Extensions.Logging;
+using TooDoo.Extensions;
 
 namespace TooDoo.Controllers
 {
@@ -26,7 +27,9 @@ namespace TooDoo.Controllers
         public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest("Invalid model");
+            }
 
             var response = await _authenticationService.Register(model);
 
@@ -41,7 +44,9 @@ namespace TooDoo.Controllers
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest("Invalid model");
+            {
+                return BadRequest(GetModelErrors());
+            }
 
             var response = await _authenticationService.Login(model);
 
@@ -95,6 +100,11 @@ namespace TooDoo.Controllers
         {
             context.Response.Cookies.Delete("access_token");
             context.Response.Cookies.Delete("refresh_token");
+        }
+
+        private List<string> GetModelErrors()
+        {
+            return ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
         }
     }
 }
