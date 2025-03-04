@@ -9,6 +9,7 @@ using TooDoo.Core.Models.User;
 using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
 using Microsoft.Extensions.Logging;
+using TooDoo.Core.Models.Auth;
 
 namespace TooDoo.Core.Services
 {
@@ -34,24 +35,35 @@ namespace TooDoo.Core.Services
         /// <summary>
         /// Logs in a user and generates a JWT token
         /// </summary>
-        public async Task<MethodResponse> Login(UserLoginModel model)
+        public async Task<LoginResponse> Login(UserLoginModel model)
         {
-            var user = await FindUserByEmailOrUsername(model.Email, model.UserName);
+            if(model.UserName == null)
+            {
+                return new LoginResponse("Invalid password or email/username", false);
+            }
+
+            var user = await FindByUserName(model.UserName);
+            
             if (user == null)
-                return new MethodResponse(false, "User does not exist", "api/authentication/login");
+            {
+                return new LoginResponse("Invalid password or email/username", false);
+            }
 
             bool passwordMatch = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordMatch)
             {
-                return new MethodResponse(false, "Password is incorrect", "api/authentication/login");
+                return new LoginResponse("Invalid password or email/username", false);
             }
 
             string accessToken = GenerateAccessToken(user);
             string refreshToken = GenerateRefreshToken();
 
-            _logger.LogInformation("User {UserName} logged in successfully", user.UserName);
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddHours(12);
+            await _userManager.UpdateAsync(user);
 
-            return new MethodResponse(true, accessToken, refreshToken);
+            _logger.LogInformation("User {UserName} logged in successfully", user.UserName);
+            return new LoginResponse(accessToken, refreshToken, "Successful login", true);
         }
 
         /// <summary>
@@ -59,7 +71,7 @@ namespace TooDoo.Core.Services
         /// </summary>
         public async Task<MethodResponse> Register(UserRegisterModel model)
         {
-            if (await UserExists(model.Email, model.UserName))
+            if (await UserExists(model.UserName))
                 return new MethodResponse(false, "User already exists", "api/authentication/register");
 
             var user = new User
@@ -85,18 +97,46 @@ namespace TooDoo.Core.Services
         /// <summary>
         /// Refreshes the JWT token using the refresh token
         /// </summary>
-        public async Task<MethodResponse> RefreshToken(UserRefreshTokenModel model)
+        public async Task<LoginResponse> RefreshToken(UserRefreshTokenModel model)
         {
-            var user = await FindUserByEmailOrUsername(model.Email, model.Email);
-            if (user == null)
-                return new MethodResponse(false, "User does not exist", "api/authentication/login");
+            var principal = GetTokenPrincipal(model.JwtToken);
 
-            string newAccessToken = GenerateAccessToken(user);
-            string newRefreshToken = GenerateRefreshToken();
+            if(principal?.Identity?.Name == null)
+            {
+                return new LoginResponse("Invalid token", false);
+            }
 
-            _logger.LogInformation("User {UserName} refreshed tokens successfully", user.UserName);
+            var user = await FindByUserName(principal.Identity.Name);
 
-            return new MethodResponse(true, newAccessToken, newRefreshToken);
+            if (user == null || user.RefreshToken != model.RefreshToken )
+            {
+                return new LoginResponse("Invalid user", false);
+            }
+
+            string accessToken = GenerateAccessToken(user);
+            string refreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddHours(12);
+            await _userManager.UpdateAsync(user);
+
+            return new LoginResponse(accessToken, refreshToken, "Token refreshed", true);
+        }
+
+        private ClaimsPrincipal? GetTokenPrincipal(string token)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret));
+
+            var validation = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            return new JwtSecurityTokenHandler().ValidateToken(token, validation, out _);
         }
 
         
@@ -135,19 +175,16 @@ namespace TooDoo.Core.Services
         /// Generates a refresh token
         /// </summary>
         private string GenerateRefreshToken()
-        {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-        }
+            => Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
         /// <summary>
         /// Checks if a user exists by email or username
         /// </summary>
-        private async Task<bool> UserExists(string email, string userName) => await _userManager.FindByEmailAsync(email) != null ||
-                                                                            await _userManager.FindByNameAsync(userName) != null;
+        private async Task<bool> UserExists(string userName) => await _userManager.FindByNameAsync(userName) != null;
 
         /// <summary>
         /// Helper method to find a user by email or username
         /// </summary>
-        private async Task<User> FindUserByEmailOrUsername(string email, string userName) => await _userManager.FindByEmailAsync(email) ?? await _userManager.FindByNameAsync(userName);
+        private async Task<User?> FindByUserName(string userName) => await _userManager.FindByNameAsync(userName);
     }
 }
