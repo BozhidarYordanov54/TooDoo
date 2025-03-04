@@ -6,12 +6,6 @@ namespace TooDoo.Core.Models.User
 {
     public class UserLoginModel
     {
-        [DataType(DataType.EmailAddress)]
-        [StringLength(EmailMaxLength, 
-            ErrorMessage = InvalidEmail, 
-            MinimumLength = EmailMinLength)]
-        public string? Email { get; set; }
-
         [StringLength(UserNameMaxLength, 
             ErrorMessage = InvalidUserName, 
             MinimumLength = UserNameMinLength)]
