@@ -58,29 +58,16 @@ namespace TooDoo.Controllers
             return Ok(new { response.Token, response.RefreshToken, response.Message });
         }
 
-        [HttpPost("refresh")]
+        [HttpPost("refreshToken")]
         [Authorize]
-        public async Task<IActionResult> Refresh()
+        public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
         {
-            var refreshToken = Request.Headers["refresh_token"].ToString();
-
-            if (string.IsNullOrEmpty(refreshToken))
-                return Unauthorized("Refresh token is missing");
-
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-            if (string.IsNullOrEmpty(userEmail))
-                return Unauthorized("User email not found in claims");
-
-            var userLoginModel = new UserRefreshTokenModel { Email = userEmail, RefreshToken = refreshToken };
-            var response = await _authenticationService.RefreshToken(userLoginModel);
-
-            if (!response.Success)
-                return Unauthorized(response.Message);
-
-            SetCookies(HttpContext, response.Token, response.RefreshToken);
-
-            return Ok(new { response.Token, response.RefreshToken, response.Message });
+            var loginRequest = await _authenticationService.RefreshToken(model);
+            if(!loginRequest.Success)
+            {
+                return Unauthorized(loginRequest.Message);
+            }
+            return Ok(loginRequest);
         }
 
         private void SetCookies(HttpContext context, string accessToken, string refreshToken)
