@@ -1,6 +1,8 @@
+using TooDoo.Core.Models.Common;
+
 namespace TooDoo.Core.Models.User
 {
-    public class UserProfileModel
+    public class UserProfileModel : ModelResult
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

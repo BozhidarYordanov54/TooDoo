@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using TooDoo.Core.Contracts;
 using TooDoo.Core.Models.Methods;
 using TooDoo.Core.Models.User;
@@ -9,35 +10,40 @@ namespace TooDoo.Core.Services
     public class UserProfileService : IUserProfileService
     {
         private readonly IRepository _repository;
+        private readonly UserManager<User> _userManager;
 
-        public UserProfileService(IRepository repository)
+        public UserProfileService(IRepository repository, UserManager<User> userManager)
         {
             _repository = repository;
+            _userManager = userManager;
         }
 
-        public Task<MethodResponse> ConfirmEmail(string userId, string token)
+        public Task<MethodResponse> ConfirmEmail(string userId)
         {
             throw new NotImplementedException();
         }
 
         public async Task<UserProfileModel> GetUserProfileDetais(string userId)
         {
-            var user = await _repository.GetByIdAsync<User>(userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            if(user == null)
+            if (user == null)
             {
-                return null;
+                return new UserProfileModel
+                {
+                    IsSuccess = false,
+                    Message = "User not found"
+                };
             }
 
-            UserProfileModel model = new UserProfileModel
+            return new UserProfileModel
             {
+                IsSuccess = true,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email
+                UserName = user.UserName ?? string.Empty,
+                Email = user.Email ?? string.Empty
             };
-
-            return model;
         }
 
         public Task SendConfirmationEmail(string userId)
@@ -50,9 +56,24 @@ namespace TooDoo.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<MethodResponse> UpdatePassword(UserProfileModel model)
+        public async Task<MethodResponse> UpdatePassword(string userId, PasswordUpdateViewModel model)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if(user == null)
+            {
+                return new MethodResponse(false, "User not found", null);
+                
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return new MethodResponse(false, "Password update failed", null);
+            }
+
+            return new MethodResponse(true, "Password updated", null);
         }
     }
 }
