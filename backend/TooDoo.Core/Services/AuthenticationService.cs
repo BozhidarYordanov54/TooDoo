@@ -162,8 +162,9 @@ namespace TooDoo.Core.Services
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes),
-                Issuer = "https://toodoo.com",
-                Audience = "https://toodoo.com",
+                NotBefore = DateTime.UtcNow,
+                Issuer = "https://localhost:5058",
+                Audience = "https://localhost:5058",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
