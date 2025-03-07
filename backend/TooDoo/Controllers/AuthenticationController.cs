@@ -53,6 +53,8 @@ namespace TooDoo.Controllers
             if (!response.Success)
                 return Unauthorized(response.Message);
 
+            // SetCookies(HttpContext, response.Token, response.RefreshToken);
+
             return Ok(new { response.Token, response.RefreshToken, response.Message });
         }
 

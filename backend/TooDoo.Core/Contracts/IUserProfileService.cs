@@ -7,8 +7,8 @@ namespace TooDoo.Core.Contracts
     {
         Task<UserProfileModel> GetUserProfileDetais(string userId);
         Task<MethodResponse> UpdateEmail(UserProfileModel model);
-        Task<MethodResponse> UpdatePassword(UserProfileModel model);
+        Task<MethodResponse> UpdatePassword(string userId, PasswordUpdateViewModel model);
         Task SendConfirmationEmail(string userId);
-        Task<MethodResponse> ConfirmEmail(string userId, string token);
+        Task<MethodResponse> ConfirmEmail(string userId);
     }
 }

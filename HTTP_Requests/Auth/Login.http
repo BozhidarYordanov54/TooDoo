@@ -1,0 +1,7 @@
+POST http://localhost:5058/api/authentication/login
+Content-Type: application/json
+
+{
+    "username": "testov_tesotv",
+    "password": "Nepomnqparoli12!"
+}
