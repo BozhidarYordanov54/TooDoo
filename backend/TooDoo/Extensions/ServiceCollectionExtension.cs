@@ -52,8 +52,8 @@ namespace TooDoo.Extensions
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     IssuerSigningKey = new SymmetricSecurityKey("ForTheLoveOfGodStoreAndLoadThisSecurely"u8.ToArray()),
-                    ValidIssuer = "https://toodoo.com",
-                    ValidAudience = "https://toodoo.com",
+                    ValidIssuer = "http://localhost:5058",
+                    ValidAudience = "http://localhost:5058",
                     ValidateAudience = true,
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,

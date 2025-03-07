@@ -53,13 +53,11 @@ namespace TooDoo.Controllers
             if (!response.Success)
                 return Unauthorized(response.Message);
 
-            SetCookies(HttpContext, response.Token, response.RefreshToken);
-
             return Ok(new { response.Token, response.RefreshToken, response.Message });
         }
 
-        [HttpPost("refreshToken")]
         [Authorize]
+        [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
         {
             var loginRequest = await _authenticationService.RefreshToken(model);
