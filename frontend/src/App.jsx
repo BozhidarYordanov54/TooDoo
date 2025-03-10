@@ -1,15 +1,20 @@
-import FloatingCards from "./components/FloatingCards";
-import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+
+// App components
+import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
+import Home from "./components/home/Home";
 
 function App() {
-
   return (
     <>
-      <Header/>
+      <Header />
 
-      <FloatingCards/>
+      <Home />
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

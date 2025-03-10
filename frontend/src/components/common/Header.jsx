@@ -1,4 +1,4 @@
-import '../css/header.css';
+import '../../css/header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ export default function Header() {
                             <a className="nav-link" href="">Pricing</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="">Login</a>
+                            <a className="nav-link auth" href="">Login</a>
                         </li>
                     </ul>
                 </nav>
