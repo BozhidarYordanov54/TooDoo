@@ -58,8 +58,8 @@ namespace TooDoo.Controllers
             return Ok(new { response.Token, response.RefreshToken, response.Message });
         }
 
-        [HttpPost("refreshToken")]
         [Authorize]
+        [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
         {
             var loginRequest = await _authenticationService.RefreshToken(model);
