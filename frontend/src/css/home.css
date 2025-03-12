@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    min-height: 80vh;
     padding-left: 24px;
     padding-right: 24px;
     margin: 0 auto;
@@ -102,7 +102,7 @@
     border-radius: 999999px;
 }
 
-.container {
+.bento-grid-container .container {
     margin-top: 3em;
     width: 100%;
     max-width: 1600px;
@@ -114,6 +114,33 @@
         "todo-templates todo-templates companies"
         "ui ease-of-use companies"
         "ui toodoo toodoo";
+}
+
+.bento-grid-container .container.visible .bento-container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.bento-grid-container .container.visible .bento-container:nth-child(n) {
+    animation-delay: calc((n - 1) * 1s);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    50%{
+        opacity: 0.5;
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bento-grid-container{
+    padding: 0.5em 2em;
 }
 
 .bento-container {

@@ -1,11 +1,39 @@
+
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import bgImage from '../../static/images/best-iphone-calendar-apps.jpg';
+import CardVideos from './CardVideos';
 
 import '../../css/home.css';
 
 export default function Home() {
+    const bentoGridObj = [
+        {
+            mainClassname: "todo-templates",
+            header: "Custom templates",
+            content: "Choose from a variety of templates to help you get started with your tasks."
+        },
+        {
+            mainClassname: "companies",
+            header: "Integration with calendars",
+            content: "Add your events or deadlines to your desired calendars"
+        },
+        {
+            mainClassname: "toodoo",
+            header: "What is TooDoo?",
+            content: "TooDoo is a simple and easy to use task management application that helps you organize your tasks and get things done."
+        },
+        {
+            mainClassname: "ease-of-use",
+            header: "Realtime chat",
+            content: "Recieve feedback immediatly using our chat app for a task you have"
+        },
+        {
+            mainClassname: "ui",
+            header: "Collaboration",
+            content: "Make a list with friends for shopping or structure your projects"
+        },
+    ];
+
     return (
         <>
             <div className="home-container">
@@ -27,59 +55,22 @@ export default function Home() {
                 <section className="bento-grid-container">
                     <h2 className="section-header">Features.</h2>
                     <div className="container">
-                        <div className="todo-templates bento-container">
-                            <div className="bento-text">
-                                <div className="header">
-                                    <h2>Custom templates</h2>
-                                </div>
-                                <div className="content">
-                                    <p>Choose from a variety of templates to help you get started with your tasks.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="companies bento-container">
-                            <div className="bento-text">
-                                <div className="header">
-                                    <h2>Integration with calendars</h2>
-                                </div>
-                                <div className="content">
-                                    <p>Add your events or deadlines to your desired calendars</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="toodoo bento-container">
-                            <div className="bento-text">
-                                <div className="header">
-                                    <h2>What is TooDoo?</h2>
-                                </div>
-                                <div className="content">
-                                    <p>TooDoo is a simple and easy to use task management application that helps you organize your tasks and get things done.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="ease-of-use bento-container">
-                            <div className="bento-text">
-                                <div className="header">
-                                    <h2>Realtime chat</h2>
-                                </div>
-                                <div className="content">
-                                    <p>Recieve feedback immediatly using our chat app for a task you have</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="ui bento-container">
-                            <div className="bento-background-wrapper">
-
-                            </div>
-                            <div className="bento-text">
-                                <div className="header">
-                                    <h2>Collaboration</h2>
-                                </div>
-                                <div className="content">
-                                    <p>Make a list with friends for shopping or structure your projects</p>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            bentoGridObj.map((obj, index) => {
+                                return (
+                                    <div className={`bento-container ${obj.mainClassname}`} key={index}>
+                                        <div className="bento-text">
+                                            <div className="header">
+                                                <h2>{obj.header}</h2>
+                                            </div>
+                                            <div className="content">
+                                                <p>{obj.content}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </section>
             </div>

@@ -26,7 +26,13 @@
     gap: 0.5em;
     font-weight: 500;
     font-size: 20px;
+    text-decoration: none;
     color: #ffffff;
+    transition: color 0.2s ease-in-out;
+}
+
+.logo-wrapper:hover{
+    color: #b392f0;
 }
 
 .site-nav{

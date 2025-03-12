@@ -1,26 +1,34 @@
+import { NavLink } from 'react-router';
+
 import '../../css/header.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+
+const links = [
+    { to: '/pricing', text: 'Pricing' },
+    { to: 'auth/login', text: 'Login' }
+];
 
 export default function Header() {
     return (
         <>
             <header className="site-header">
-                <div className="logo-wrapper">
+                <NavLink className="logo-wrapper" to={'/'}>
                     <div className="logo">
                         <FontAwesomeIcon icon={faSquareCheck} />
                     </div>
                     <p className="brand-name">TooDoo</p>
-                </div>
+                </NavLink>
 
                 <nav className="site-nav">
                     <ul className="nav-list">
-                        <li className="nav-item">
-                            <a className="nav-link" href="">Pricing</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link auth" href="">Login</a>
-                        </li>
+                        {links.map((link, index) => {
+                            return (
+                                <li key={index} className="nav-item">
+                                    <NavLink to={link.to} className={`nav-link ${link.text == "Login" ? "auth" : ""}`}>{link.text}</NavLink>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </nav>
             </header>
