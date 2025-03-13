@@ -27,6 +27,13 @@ namespace TooDoo.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddCors(x => x.AddDefaultPolicy(p =>
+            {
+                p.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            }));
+
             services.AddScoped<IRepository, Repository>();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
