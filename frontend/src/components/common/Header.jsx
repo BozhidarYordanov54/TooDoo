@@ -7,18 +7,18 @@ import { AuthContext } from '../auth/AuthContext';
 import '../../css/header.css';
 
 const loggedOutLinks = [
-    { to: '/pricing', text: 'Pricing' },
-    { to: 'auth/login', text: 'Login' },
+    { key: '1', path: '/pricing', text: 'Pricing' },
+    { key: '2', path: 'auth/login', text: 'Login' },
 ];
 
 const loggedInLinks = [
-    { to: 'user/profile', text: 'Profile' },
-    { to: '/', text: 'Logout' },
+    { key: '1', path: 'user/profile', text: 'Profile' },
+    { key: '2', path: '/', text: 'Logout' },
 ]
 
 export default function Header() {
     const { user, logout } = useContext(AuthContext);
-    const [isAuthenticated, setIsAuthenticated] = useState(user ? true : false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -44,19 +44,21 @@ export default function Header() {
                 <p className="brand-name">TooDoo</p>
             </NavLink>
 
+
+
             <nav className="site-nav">
                 <ul className="nav-list">
                     {
-                        isAuthenticated ? loggedInLinks.map((link, index) => {
+                        isAuthenticated ? loggedInLinks.map((link) => {
                             return (
-                                <li key={index} className="nav-item">
-                                    <NavLink to={link.to} className={`nav-link ${link.text == "Logout" ? 'auth' : ''}`} onClick={link.text == "Logout" ? handleLogout : ""}>{link.text}</NavLink>
+                                <li key={link.key} className="nav-item">
+                                    <NavLink to={link.path} className={`nav-link ${link.text == "Logout" ? 'auth' : ''}`} onClick={link.text == "Logout" ? handleLogout : ""}>{link.text}</NavLink>
                                 </li>
                             )
-                        }) : loggedOutLinks.map((link, index) => {
+                        }) : loggedOutLinks.map((link) => {
                             return (
-                                <li key={index} className="nav-item">
-                                    <NavLink to={link.to} className={`nav-link ${link.text == "Login" ? 'auth' : ''}`}>{link.text}</NavLink>
+                                <li key={link.key} className="nav-item">
+                                    <NavLink to={link.path} className={`nav-link ${link.text == "Login" ? 'auth' : ''}`}>{link.text}</NavLink>
                                 </li>
                             )
                         })
