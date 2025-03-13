@@ -99,7 +99,7 @@ namespace TooDoo.Core.Services
         /// </summary>
         public async Task<LoginResponse> RefreshToken(UserRefreshTokenModel model)
         {
-            var principal = GetTokenPrincipal(model.JwtToken);
+            var principal = GetTokenPrincipal(model.Token);
 
             if(principal?.Identity?.Name == null)
             {

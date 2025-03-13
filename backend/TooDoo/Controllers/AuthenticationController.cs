@@ -58,7 +58,7 @@ namespace TooDoo.Controllers
             return Ok(new { response.Token, response.RefreshToken, response.Message });
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
         {
