@@ -108,9 +108,9 @@ namespace TooDoo.Core.Services
 
             var user = await FindByUserName(principal.Identity.Name);
 
-            if (user == null || user.RefreshToken != model.RefreshToken )
+            if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiry < DateTime.UtcNow)
             {
-                return new LoginResponse("Invalid user", false);
+                return new LoginResponse("Invalid user or token", false);
             }
 
             string accessToken = GenerateAccessToken(user);
