@@ -83,23 +83,37 @@
 }
 
 .cta-pricing {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
+    position: relative;
     border: 2px solid #b392f0;
     padding: 1em 2em;
+    min-width: 210px;
     font-weight: 600;
     text-decoration: none;
+    text-align: left;
     color: #b392f0;
     border-radius: 999999px;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .arrow {
+    position: absolute;
+    right: 1.5em;
+    top: 50%;
+    transform: translateY(-50%);
     background: #b392f0;
     color: #ffffff;
     padding: 0.3em;
     border-radius: 999999px;
+    transition: right 0.2s ease-in-out;
+}
+
+.cta-pricing:hover {
+    color: #a37be6;
+    background: #272727;
+}
+
+.cta-pricing:hover .arrow{
+    right: 0.7em;
 }
 
 .bento-grid-container .container {

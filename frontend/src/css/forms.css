@@ -1,0 +1,155 @@
+.auth-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    animation: rotateBackground 10s linear infinite;
+    background-size: 200% 200%;
+}
+
+.auth-form-wrapper,
+.register-wrapper {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.form h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.form .form-group {
+    position: relative;
+}
+
+.form .form-group>input[type="text"],
+.form .form-group>input[type="password"] {
+    width: 300px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+.form .form-group>label:not([for="rememberMe"]) {
+    position: absolute;
+    padding: 0.1rem 0.2rem;
+    top: 50%;
+    border-radius: 5px;
+    transform: translateY(-50%);
+    background: #ffffff;
+    left: 1rem;
+    pointer-events: none;
+    transition: top 0.3s, left 0.3s, transform 0.3s, font-size 0.3s, color 0.3s;
+}
+
+.form .form-group>input[type="text"]:focus+label,
+.form .form-group>input[type="password"]:focus+label {
+    top: 1em;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+}
+
+.form .form-group>button {
+    border-radius: 9999px;
+    margin: 1em 0;
+    width: 300px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 8px 18px;
+    background: #b392f0;
+    box-shadow: #b392f0 0 10px 20px -10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form .form-group.remember-me {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form .form-group input[type="checkbox"] {
+    position: relative;
+}
+
+.form .form-group>button:hover {
+    background: #a681f0;
+}
+
+.form .form-group>button:disabled {
+    background: #7e61d3;
+}
+
+.redirect-auth {
+    text-align: center;
+    color: #ffffff;
+}
+
+.redirect-auth a {
+    color: #b392f0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-wrapper {
+    background: rgb(10, 10, 10);
+    background: linear-gradient(90deg, rgba(10, 10, 10, 1) 0%, rgba(106, 90, 135, 1) 50%, rgba(179, 146, 240, 1) 100%);
+    color: #ffffff;
+    flex-direction: column;
+}
+
+.register-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 500px;
+}
+
+.register-content .register-content-header {
+    font-size: 2rem;
+}
+
+.register-content .register-content-header h2{
+    letter-spacing: 0.1em;
+}
+
+.register-content .main-content {
+    font-size: 1.2rem;
+}
+
+.register-content .register-button a {
+    background: #272727;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+@keyframes rotateBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
