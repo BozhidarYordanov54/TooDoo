@@ -2,7 +2,7 @@ import axios from "axios";
 import { Navigate } from "react-router";
 import { jwtDecode } from "jwt-decode";
 
-export default function PrivateRoute({ children }) {
+export default function PrivateRoute({ onInvalidToken, children }) {
     const token = localStorage.getItem("token");
 
     if (token === null) {
@@ -20,19 +20,22 @@ export default function PrivateRoute({ children }) {
                 const response = await axios.post(refreshURL, {
                     refreshToken: localStorage.getItem("refreshToken"),
                     token: token,
-                },{
+                }, {
                     headers: {
                         "Content-Type": "application/json",
                     },
                 });
 
-                if(response.status === 200){
+                if (response.status === 200) {
                     const data = await response.data;
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("refreshToken", data.refreshToken);
                 }
 
-            } catch (error) { }
+            } catch (error) {
+                console.log(error);
+                onInvalidToken();
+            }
 
         };
 

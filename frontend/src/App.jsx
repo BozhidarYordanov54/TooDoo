@@ -29,18 +29,18 @@ export default function App() {
         setUser(null);
     }
 
-        return (
-            <>
-                <BrowserRouter>
-                    <Header user={user} onLogout={handleLogout} />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path='auth/login' element={<Login onLogin={handleLogin} />} />
-                        <Route path='user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
-                    </Routes>
-                </BrowserRouter>
-
+    return (
+        <>
+            <BrowserRouter>
+                <Header user={user} onLogout={handleLogout} />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path='auth/login' element={<Login onLogin={handleLogin} />} />
+                    <Route path='user/profile' element={<PrivateRoute onInvalidToken={handleLogout}><Profile /></PrivateRoute>} />
+                </Routes>
                 <Footer />
-            </>
-        );
-    }
+            </BrowserRouter>
+
+        </>
+    );
+}
