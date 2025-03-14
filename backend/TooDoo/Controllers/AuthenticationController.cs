@@ -65,28 +65,10 @@ namespace TooDoo.Controllers
             var loginRequest = await _authenticationService.RefreshToken(model);
             if(!loginRequest.Success)
             {
-                return Unauthorized(loginRequest.Message);
+                return BadRequest(loginRequest.Message);
             }
+
             return Ok(loginRequest);
-        }
-
-        private void SetCookies(HttpContext context, string accessToken, string refreshToken)
-        {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.None
-            };
-
-            context.Response.Cookies.Append("access_token", accessToken, cookieOptions);
-            context.Response.Cookies.Append("refresh_token", refreshToken, cookieOptions);
-        }
-
-        private void RemoveCookies(HttpContext context)
-        {
-            context.Response.Cookies.Delete("access_token");
-            context.Response.Cookies.Delete("refresh_token");
         }
 
         private List<string> GetModelErrors()

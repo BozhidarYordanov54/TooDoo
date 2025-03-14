@@ -162,7 +162,7 @@ namespace TooDoo.Core.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 NotBefore = DateTime.UtcNow,
                 Issuer = "https://localhost:5058",
                 Audience = "https://localhost:5058",
