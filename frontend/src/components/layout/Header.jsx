@@ -6,13 +6,16 @@ import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import "../../css/header.css";
 
 const loggedOutLinks = [
-    { key: "1", path: "/pricing", text: "Pricing" },
-    { key: "2", path: "auth/login", text: "Login" },
+    { key: "1", path: "/", text: "Home" },
+    { key: "2", path: "/pricing", text: "Pricing" },
+    { key: "3", path: "auth/login", text: "Login" },
 ];
 
 const loggedInLinks = [
-    { key: "1", path: "user/profile", text: "Profile" },
-    { key: "2", path: "/", text: "Logout" },
+    { key: "1", path: "/", text: "Home" },
+    { key: "2", path: "dashboard", text: "Dashboard" },
+    { key: "3", path: "user/profile", text: "Profile" },
+    { key: "4", path: "/", text: "Logout" },
 ];
 
 export default function Header({ user, onLogout}) {

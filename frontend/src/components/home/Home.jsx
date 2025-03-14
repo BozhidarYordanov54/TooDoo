@@ -1,7 +1,6 @@
-
+import { NavLink } from 'react-router';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CardVideos from './CardVideos';
 
 import '../../css/home.css';
 
@@ -47,8 +46,8 @@ export default function Home() {
                             <p className="home-description">TooDoo is a simple and easy to use task management application that helps you organize your tasks and get things done.</p>
                         </div>
                         <div className="cta-wrapper">
-                            <a href="/login" className="cta-login">Join For Free</a>
-                            <a href="/pricing" className='cta-pricing'>See our plans <FontAwesomeIcon className='arrow' icon={faArrowRight}></FontAwesomeIcon></a>
+                            <NavLink to="auth/login" className="cta-login">Join For Free</NavLink>
+                            <NavLink to="/pricing" className='cta-pricing'>See our plans <FontAwesomeIcon className='arrow' icon={faArrowRight}></FontAwesomeIcon></NavLink>
                         </div>
                     </div>
                 </div>
