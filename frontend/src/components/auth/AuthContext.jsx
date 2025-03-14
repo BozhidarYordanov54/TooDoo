@@ -1,6 +1,10 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 export const AuthContext = createContext();
+
+export function useAuth(){
+    return useContext(AuthContext);
+}
 
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -13,7 +17,8 @@ export default function AuthProvider({ children }) {
     }, []);
 
     const login = (data) => {
-        localStorage.setItem('token', data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('refreshToken', data.refreshToken);
         setUser({ data });
     }
 

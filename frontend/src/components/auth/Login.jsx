@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 const url = "http://localhost:5058/api/authentication/login";
 
-export default function Login() {
+export default function Login( {onLogin} ) {
     const [error, setError] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -17,21 +17,15 @@ export default function Login() {
         try {
             const response = await axios.post(
                 url,
-                {
-                    username,
-                    password,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
+                { username, password, },
+                { headers: { "Content-Type": "application/json", }, }
             );
 
             if (response.status === 200) {
                 const data = await response.data;
                 localStorage.setItem("refreshToken", data.refreshToken);
                 localStorage.setItem("token", data.token);
+                onLogin();
                 navigate("/");
             } else {
                 setError(response.data.message);
