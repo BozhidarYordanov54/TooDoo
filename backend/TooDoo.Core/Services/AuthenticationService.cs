@@ -133,6 +133,7 @@ namespace TooDoo.Core.Services
                 IssuerSigningKey = key,
                 ValidateIssuer = false,
                 ValidateAudience = false,
+                ValidateLifetime = false,
                 ClockSkew = TimeSpan.Zero
             };
 

@@ -29,7 +29,7 @@ namespace TooDoo.Extensions
         {
             services.AddCors(x => x.AddDefaultPolicy(p =>
             {
-                p.WithOrigins("http://localhost:5174")
+                p.WithOrigins("http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
             }));
