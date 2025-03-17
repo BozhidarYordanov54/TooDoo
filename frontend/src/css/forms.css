@@ -7,7 +7,7 @@
 }
 
 .auth-form-wrapper,
-.register-wrapper {
+.account-wrapper {
     flex: 1;
     height: 100%;
     display: flex;
@@ -104,33 +104,33 @@
     font-weight: bold;
 }
 
-.register-wrapper {
+.account-wrapper {
     background: rgb(10, 10, 10);
     background: linear-gradient(90deg, rgba(10, 10, 10, 1) 0%, rgba(106, 90, 135, 1) 50%, rgba(179, 146, 240, 1) 100%);
     color: #ffffff;
     flex-direction: column;
 }
 
-.register-content {
+.account-content {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 500px;
 }
 
-.register-content .register-content-header {
+.account-content .account-content-header {
     font-size: 2rem;
 }
 
-.register-content .register-content-header h2{
+.account-content .account-content-header h2{
     letter-spacing: 0.1em;
 }
 
-.register-content .main-content {
+.account-content .main-content {
     font-size: 1.2rem;
 }
 
-.register-content .register-button a {
+.account-content .account-button a {
     background: #272727;
     color: #ffffff;
     padding: 0.5rem 1rem;
