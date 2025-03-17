@@ -1,49 +1,83 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from "react-router";
 import { jwtDecode } from "jwt-decode";
 
+const refreshTokenURL = "http://localhost:5058/api/authentication/refreshToken";
+
 export default function PrivateRoute({ onInvalidToken, children }) {
-    const token = localStorage.getItem("token");
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isTokenValid, setIsTokenValid] = useState(null);
 
-    if (token === null) {
-        return <Navigate to="/auth/login" />;
-    }
+    useEffect(() => {
+        const validateToken = async () => {
+            const token = localStorage.getItem("token");
 
-    const decodedToken = jwtDecode(token);
+            if(!token){
+                setIsTokenValid(false);
+                return;
+            }
 
-    const isTokenValid = decodedToken.exp * 1000 > new Date().getTime();
+            try{
+                const decodedToken = jwtDecode(token);
+                const isTokenExpired = decodedToken.exp * 1000 < new Date().getTime();
+                
+                if(isTokenExpired){
+                    await refreshToken();
+                } else {
+                    setIsTokenValid(true);
+                }
+            }
+            catch(error){
+                setIsTokenValid(false);
+                onInvalidToken();
+                console.log(error);
+            }
+        }
 
-    if (!isTokenValid) {
-        const refreshURL = "http://localhost:5058/api/authentication/refreshToken";
-        const refreshTokenHandler = async () => {
+        const refreshToken = async () => {
+            setIsRefreshing(true);
+            const refreshToken = localStorage.getItem("refreshToken");
+
             try {
-                const response = await axios.post(refreshURL, {
-                    refreshToken: localStorage.getItem("refreshToken"),
-                    token: token,
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
+                const response = await axios.post(refreshTokenURL,
+                    {
+                        token: localStorage.getItem("token"),
+                        refreshToken: refreshToken
                     },
-                });
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
 
                 if (response.status === 200) {
                     const data = await response.data;
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("refreshToken", data.refreshToken);
+                    setIsTokenValid(true);
                 }
-
-            } catch (error) {
-                console.log(error);
-                onInvalidToken();
             }
+            catch (error) {
+                setIsTokenValid(false);
+                onInvalidToken();
+                console.log(error);
+            } finally {
+                setIsRefreshing(false);
+            }
+        }
+        
+        validateToken();
+       
+    }, [onInvalidToken]);
 
-        };
-
-        refreshTokenHandler();
+    if (isRefreshing) {
+        return <p>Refreshing token...</p>;
     }
 
-    //* If user is not logged in, redirect to login page
-    //* Otherwise, render the children element that is set
-    return isTokenValid ? children : <Navigate to="/auth/login" />;
+    if(isTokenValid === null){
+        return <p>Checking token...</p>;
+    }
 
+    return isTokenValid ? children : <Navigate to="/auth/login" />;
 }
