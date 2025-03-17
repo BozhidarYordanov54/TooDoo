@@ -33,8 +33,9 @@ namespace TooDoo.Controllers
 
             var response = await _authenticationService.Register(model);
 
-            if (!response.Success)
+            if (!response.Success){
                 return BadRequest(response.Message);
+            }
 
             return Ok(new { message = response.Message });
         }
