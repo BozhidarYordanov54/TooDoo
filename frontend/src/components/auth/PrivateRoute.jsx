@@ -2,16 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from "react-router";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../context/AuthContext";
 
 const refreshTokenURL = "http://localhost:5058/api/authentication/refreshToken";
 
-export default function PrivateRoute({ onInvalidToken, children }) {
+export default function PrivateRoute({ children }) {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [isTokenValid, setIsTokenValid] = useState(null);
+    const { token, refreshToken, handleLogout } = useAuth();
 
     useEffect(() => {
         const validateToken = async () => {
-            const token = localStorage.getItem("token");
 
             if(!token){
                 setIsTokenValid(false);
@@ -23,26 +24,25 @@ export default function PrivateRoute({ onInvalidToken, children }) {
                 const isTokenExpired = decodedToken.exp * 1000 < new Date().getTime();
                 
                 if(isTokenExpired){
-                    await refreshToken();
+                    await getNewToken();
                 } else {
                     setIsTokenValid(true);
                 }
             }
             catch(error){
                 setIsTokenValid(false);
-                onInvalidToken();
+                handleLogout();
                 console.log(error);
             }
         }
 
-        const refreshToken = async () => {
+        const getNewToken = async () => {
             setIsRefreshing(true);
-            const refreshToken = localStorage.getItem("refreshToken");
 
             try {
                 const response = await axios.post(refreshTokenURL,
                     {
-                        token: localStorage.getItem("token"),
+                        token: token,
                         refreshToken: refreshToken
                     },
                     {
@@ -60,7 +60,7 @@ export default function PrivateRoute({ onInvalidToken, children }) {
             }
             catch (error) {
                 setIsTokenValid(false);
-                onInvalidToken();
+                handleLogout();
                 console.log(error);
             } finally {
                 setIsRefreshing(false);
@@ -69,7 +69,7 @@ export default function PrivateRoute({ onInvalidToken, children }) {
         
         validateToken();
        
-    }, [onInvalidToken]);
+    }, [refreshToken, token]);
 
     if (isRefreshing) {
         return <p>Refreshing token...</p>;

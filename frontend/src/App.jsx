@@ -1,45 +1,46 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { Routes, Route } from 'react-router';
 
 // App components
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/home/Home";
 import Error404 from './components/common/Error404';
+import { AuthContext } from './context/AuthContext';
 
 import Profile from './components/User/Profile';
 import PrivateRoute from './components/auth/PrivateRoute';
 
 // Auth components
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 export default function App() {
-    const [user, setUser] = useState(() => {
-        const token = localStorage.getItem("token");
-        return token ? { token } : null;
-    });
+    const [authData, setAuthData] = useState({});
 
-    const handleLogin = () => {
-        const token = localStorage.getItem("token");
-        setUser({ token });
+    const handleLogin = (authData) => {
+        console.log(authData);
+        console.log(authData.data);
+        setAuthData({username: authData.data.username, token: authData.data.token, refreshToken: authData.data.refreshToken});
     }
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
-        setUser(null);
+        setAuthData({});
     }
 
     return (
         <>
-            <Header user={user} onLogout={handleLogout} />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path='auth/login' element={<Login onLogin={handleLogin} />} />
-                <Route path='user/profile' element={<PrivateRoute onInvalidToken={handleLogout}><Profile /></PrivateRoute>} />
-                <Route path="*" element={<Error404 />} />
-            </Routes>
-            <Footer />
+            <AuthContext.Provider value={{...authData, handleLogin, handleLogout}}>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path='auth/login' element={<Login />} />
+                    <Route path='auth/register' element={<Register />} />
+                    <Route path='user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+                    <Route path="*" element={<Error404 />} />
+                </Routes>
+                <Footer />
+            </AuthContext.Provider>
         </>
     );
 }

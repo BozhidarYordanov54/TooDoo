@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../auth/AuthContext";
-
+import { AuthContext } from "../../context/AuthContext";
 export default function Profile() {
 	const { user } = useContext(AuthContext);
 	const [profile, setProfile] = useState({});

@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 
 import "../../css/header.css";
+import { AuthContext } from "../../context/AuthContext";
 
 const loggedOutLinks = [
     { key: "1", path: "/", text: "Home" },
@@ -18,12 +19,8 @@ const loggedInLinks = [
     { key: "4", path: "/", text: "Logout" },
 ];
 
-export default function Header({ user, onLogout}) {
-    const[auth, setAuth] = useState(!!user);
-
-    useEffect(() => {
-        setAuth(!!user);
-    }, [user]);
+export default function Header() {
+    const {token, username} = useContext(AuthContext);
 
     const handleLogout = () => {
         onLogout();
@@ -41,7 +38,7 @@ export default function Header({ user, onLogout}) {
 
             <nav className="site-nav">
                 <ul className="nav-list">
-                    {auth
+                    {token
                         ? loggedInLinks.map((link) => {
                             return (
                                 <li key={link.key} className="nav-item">
@@ -49,7 +46,7 @@ export default function Header({ user, onLogout}) {
                                         to={link.path}
                                         className={`nav-link ${link.text == "Logout" ? "auth" : ""
                                             }`}
-                                        onClick={link.text == "Logout" ? handleLogout : ""}
+                                        onClick={link.text == `Logout` ? handleLogout : ""}
                                     >
                                         {link.text}
                                     </NavLink>
@@ -61,7 +58,7 @@ export default function Header({ user, onLogout}) {
                                 <li key={link.key} className="nav-item">
                                     <NavLink
                                         to={link.path}
-                                        className={`nav-link ${link.text == "Login" ? "auth" : ""
+                                        className={`nav-link ${link.text == `Login` ? "auth" : ""
                                             }`}
                                     >
                                         {link.text}
