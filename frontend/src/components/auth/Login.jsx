@@ -1,44 +1,36 @@
-import axios from "axios";
+
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useLogin } from "../../api/authApi";
+import { useAuth } from "../../context/AuthContext";
 import "../../css/forms.css"
 
+import AuthAccountRedirect from "../common/AuthAccountRedirect";
+
+document.title += " | Login";
 const url = "http://localhost:5058/api/authentication/login";
 
-export default function Login({ onLogin }) {
+export default function Login() {
+    const { handleLogin } = useAuth();
     const [error, setError] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [pending, setPending] = useState(false);
-    const navigate = useNavigate();
 
-    document.title += " | Login";
+    const navigate = useNavigate();
+    const { login } = useLogin();
 
     const submitHandler = async (e) => {
         e.preventDefault();
         setPending(true);
-        try {
-            const response = await axios.post(
-                url,
-                { username, password, },
-                { headers: { "Content-Type": "application/json", }, }
-            );
 
-            if (response.status === 200) {
-                const data = await response.data;
-                localStorage.setItem("refreshToken", data.refreshToken);
-                localStorage.setItem("token", data.token);
-                onLogin();
-                navigate("/");
-            } else {
-                setError(response.data.message);
-                // Handle login failure (e.g., show an error message)
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setPending(false);
+        const data = await login(username, password);
+
+        if (data.status === 200) {
+            console.log(data);
+            handleLogin(data);
+            navigate("/");
         }
     };
 
@@ -100,23 +92,9 @@ export default function Login({ onLogin }) {
 
                     <div className="redirect-auth">
                         <p>Don't have an account?</p>
-                        <a href="/auth/register">Register now</a>
                     </div>
                 </div>
-                <div className="register-wrapper">
-                    <div className="register-content">
-                        <div className="register-content-header">
-                            <h2>Register</h2>
-                            <p>Don't have an account yet?</p>
-                        </div>
-                        <div className="main-content">
-                            <p>Register now to start managing your tasks with TooDoo, and don't miss any important tasks</p>
-                        </div>
-                        <div className="register-button">
-                            <a href="/auth/register">Register</a>
-                        </div>
-                    </div>
-                </div>
+                <AuthAccountRedirect isLogin={true}/>
             </div>
         </>
     );
