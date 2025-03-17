@@ -2,6 +2,7 @@ import { NavLink } from "react-router"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSquareCheck, faMailBulk } from "@fortawesome/free-solid-svg-icons"
 import { faInstagram, faFacebook, faTiktok, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import "../../css/footer.css"
 
 const socials = [
     { key: 1, path: "https://www.instagram.com", icon: <FontAwesomeIcon icon={faInstagram} /> },
@@ -20,9 +21,10 @@ export default function Footer() {
                             <NavLink to="/">
                                 <div className="logo">
                                     <FontAwesomeIcon icon={faSquareCheck} />
+                                    <p className="brand-name">TooDoo</p>
                                 </div>
-                                <p className="brand-name">TooDoo</p>
                             </NavLink>
+                            <p className="slogan">Make your life easier with us</p>
                         </div>
                         <div className="socials">
                             {socials.map((social) => {
@@ -38,15 +40,6 @@ export default function Footer() {
                         <NavLink to="/about">About</NavLink>
                         <NavLink to="/contact">Contact</NavLink>
                         <NavLink to="/privacy">Privacy</NavLink>
-                    </div>
-                </div>
-                <div className="newsletter-wrapper">
-                    <FontAwesomeIcon icon={faMailBulk} />
-                    <h2>Subscribe to our newsletter</h2>
-                    <p>Stay up to date with our newest futures and plans</p>
-                    <div className="newsletter-form">
-                        <input type="email" placeholder="Enter your email" />
-                        <button type="submit">Subscribe</button>
                     </div>
                 </div>
                 <div className="copyright-wrapper">
