@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const registerBaseURL = "http://localhost:5058/api/authentication/register";
 const loginBaseURL = "http://localhost:5058/api/authentication/login";
 const refreshTokenBaseURL = "http://localhost:5058/api/authentication/refreshToken";
 
@@ -20,6 +21,10 @@ export const useRegister = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    return {
+        register,
     };
 }
 

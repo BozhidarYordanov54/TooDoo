@@ -4,21 +4,20 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useRegister } from "../../api/authApi";
 export default function Register() {
-    const { handleRegister } = useAuth();
-    const { register } = useRegister();
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [pending, setIsPending] = useState(false);
+    const [error, setError] = useState(null);
 
-    const[pending, setIsPending] = useState(false);
-    const[error, setError] = useState(null);
+    const { handleRegister } = useAuth();
+    const { register } = useRegister();
 
     const submitHandler = async (e) => {
         e.preventDefault();
         setIsPending(true);
 
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             setError('Passwords do not match');
             setIsPending(false);
             return;
@@ -45,7 +44,7 @@ export default function Register() {
             <div className="auth-wrapper">
                 <div className="auth-form-wrapper">
                     <form className="form login" onSubmit={submitHandler}>
-                        <h2>Login</h2>
+                        <h2>Register</h2>
                         <div className="form-group">
                             <input
                                 type="text"
