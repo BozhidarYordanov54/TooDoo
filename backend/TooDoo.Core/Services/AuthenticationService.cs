@@ -63,7 +63,7 @@ namespace TooDoo.Core.Services
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation("User {UserName} logged in successfully", user.UserName);
-            return new LoginResponse(accessToken, refreshToken, "Successful login", true);
+            return new LoginResponse(user.UserName, accessToken, refreshToken, "Successful login", true);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace TooDoo.Core.Services
             user.RefreshTokenExpiry = DateTime.UtcNow.AddHours(12);
             await _userManager.UpdateAsync(user);
 
-            return new LoginResponse(accessToken, refreshToken, "Token refreshed", true);
+            return new LoginResponse(user.UserName, accessToken, refreshToken, "Token refreshed", true);
         }
 
         private ClaimsPrincipal? GetTokenPrincipal(string token)

@@ -14,15 +14,17 @@ namespace TooDoo.Core.Models.Auth
             Success = success;
         }
 
-        public LoginResponse(string token, string refreshToken, string? message)
+        public LoginResponse(string username, string token, string refreshToken, string? message)
         {
+            Username = username;
             Token = token;
             RefreshToken = refreshToken;
             Message = message ?? string.Empty;
         }
 
-        public LoginResponse(string token, string refreshToken, string? message, bool success)
+        public LoginResponse(string username, string token, string refreshToken, string? message, bool success)
         {
+            Username = username;
             Token = token;
             RefreshToken = refreshToken;
             Message = message ?? string.Empty;
@@ -32,6 +34,7 @@ namespace TooDoo.Core.Models.Auth
         public bool Success { get; set; }
         public string Token { get; set; } = string.Empty;
         public string RefreshToken { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
     }
 }

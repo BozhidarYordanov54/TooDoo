@@ -56,7 +56,7 @@ namespace TooDoo.Controllers
 
             // SetCookies(HttpContext, response.Token, response.RefreshToken);
 
-            return Ok(new { response.Token, response.RefreshToken, response.Message });
+            return Ok(new { response.Username, response.Token, response.RefreshToken, response.Message });
         }
 
         [AllowAnonymous]
