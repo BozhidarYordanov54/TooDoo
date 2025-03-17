@@ -1,6 +1,15 @@
 import { createContext, useState, useEffect, useContext } from "react";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(
+    {
+        username: '',
+        token: '',
+        refreshToken: '',
+        handleLogin: () => { },
+        handleRegister: () => { },
+        handleLogout: () => { },
+    }
+);
 
 export function useAuth(){
     return useContext(AuthContext);
