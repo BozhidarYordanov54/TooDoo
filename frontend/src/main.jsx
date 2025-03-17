@@ -1,4 +1,5 @@
 import { StrictMode } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import '../src/css/typography.css'
@@ -7,6 +8,8 @@ import AuthProvider from './components/auth/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
     <AuthProvider>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </AuthProvider>
 )

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/home/Home";
+import Error404 from './components/common/Error404';
 
 import Profile from './components/User/Profile';
 import PrivateRoute from './components/auth/PrivateRoute';
@@ -31,16 +32,14 @@ export default function App() {
 
     return (
         <>
-            <BrowserRouter>
-                <Header user={user} onLogout={handleLogout} />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path='auth/login' element={<Login onLogin={handleLogin} />} />
-                    <Route path='user/profile' element={<PrivateRoute onInvalidToken={handleLogout}><Profile /></PrivateRoute>} />
-                </Routes>
-                <Footer />
-            </BrowserRouter>
-
+            <Header user={user} onLogout={handleLogout} />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path='auth/login' element={<Login onLogin={handleLogin} />} />
+                <Route path='user/profile' element={<PrivateRoute onInvalidToken={handleLogout}><Profile /></PrivateRoute>} />
+                <Route path="*" element={<Error404 />} />
+            </Routes>
+            <Footer />
         </>
     );
 }
