@@ -17,23 +17,22 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.Use(async (context, next) =>
 {
     var token = context.Request.Cookies["AccessToken"];
     if (!string.IsNullOrEmpty(token))
     {
-        context.Request.Headers.Append("Authorization", "Bearer " + token);
+        context.Request.Headers.Append("Authorization", $"Bearer {token}");
     }
 
     await next();
 });
 
-app.UseCors();
+app.UseCors("AllowFrontEnd");
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

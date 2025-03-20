@@ -15,19 +15,17 @@ export default function PrivateRoute({ children }) {
 
             if (!token) {
                 setIsTokenValid(false);
+                console.log(isTokenValid);
                 return;
             }
-
             try {
                 const decodedToken = jwtDecode(token);
                 const isTokenExpired = decodedToken.exp * 1000 < new Date().getTime();
 
                 if (isTokenExpired) {
                     setIsRefreshing(true);
-                    const data = await getNewToken(token, refreshToken);
-                        handleRefreshToken(data.data.token, data.data.refreshToken);
-                        setIsTokenValid(true);
-                        setIsRefreshing(false);
+                    const response = await getNewToken(token, refreshToken);
+                    setIsTokenValid(true);
                 } else {
                     setIsTokenValid(true);
                 }
@@ -36,6 +34,8 @@ export default function PrivateRoute({ children }) {
                 setIsTokenValid(false);
                 handleLogout();
                 console.log(error);
+            } finally {
+                setIsRefreshing(false);
             }
         }
 

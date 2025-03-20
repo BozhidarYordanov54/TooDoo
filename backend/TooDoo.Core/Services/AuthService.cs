@@ -118,23 +118,41 @@ namespace TooDoo.Core.Services
             return new LoginResponse();
         }
 
-        public void SetAuthCookies(HttpResponse response, string accessToken, string refreshToken)
+        public Task SetAuthCookies(HttpResponse response, string accessToken, string refreshToken)
         {
             response.Cookies.Append("AccessToken", accessToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddSeconds(_accessTokenExpiryMinutes)
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes)
             });
 
             response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(12)
             });
+
+            return Task.CompletedTask;
+        }
+
+        public async Task Logout(HttpRequest request, HttpResponse response)
+        {
+            string refreshToken = request.Cookies["RefreshToken"] ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                var user = await FindByToken(refreshToken);
+                user.RefreshToken = null;
+                user.RefreshTokenExpiry = new DateTime();
+                await _userManager.UpdateAsync(user);
+            }
+
+            response.Cookies.Delete("AccessToken");
+            response.Cookies.Delete("RefreshToken");
         }
 
         private string GenerateAccessToken(User user)

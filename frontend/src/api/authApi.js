@@ -1,20 +1,16 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { axiosPrivate } from "./axios";
 
-const registerBaseURL = "http://localhost:5058/api/authentication/register";
-const loginBaseURL = "http://localhost:5058/api/authentication/login";
-const refreshTokenBaseURL = "http://localhost:5058/api/authentication/refreshToken";
+const registerBaseURL = "api/auth/register";
+const loginBaseURL = "/api/auth/login";
+const refreshTokenBaseURL = "api/auth/refreshToken";
 
 export const useRefreshToken = () => {
-    const getNewToken = async (token, refreshToken) => {
-        console.log(token, refreshToken);
+    const getNewToken = async () => {
         try {
-            const response = await axios.post(
-                refreshTokenBaseURL,
-                { token: token, refreshToken: refreshToken },
-                { headers: { "Content-Type": "application/json" } }
-            );
+            const response = await axiosPrivate.post(refreshTokenBaseURL);
 
             if(response.status === 200){
                 console.log(response);
@@ -56,7 +52,7 @@ export const useLogin = () => {
     const abortController = new AbortController();
     const login = async (username, password) => {
         try{
-            const response = await axios.post(loginBaseURL, 
+            const response = await axiosPrivate.post(loginBaseURL, 
                 { username, password },
                 { headers: { "Content-Type": "application/json" } },
                 { signal: abortController.signal })
@@ -78,3 +74,5 @@ export const useLogin = () => {
         login,
     }
 }
+
+

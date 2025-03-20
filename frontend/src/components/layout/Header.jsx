@@ -20,7 +20,7 @@ const loggedInLinks = [
 ];
 
 export default function Header() {
-    const {token, username, handleLogout} = useContext(AuthContext);
+    const { token, username, handleLogout } = useContext(AuthContext);
 
     return (
         <header className="site-header">

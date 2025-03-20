@@ -15,6 +15,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
+import { axiosPrivate } from './api/axios';
 
 export default function App() {
     const [authData, setAuthData] = useState({});
@@ -23,8 +24,13 @@ export default function App() {
         setAuthData({username: authData.data.username, token: authData.data.token, refreshToken: authData.data.refreshToken});
     }
 
-    const handleLogout = () => {
-        setAuthData({});
+    const handleLogout = async () => {
+        try {
+            await axiosPrivate.post('/api/auth/logout');
+            setAuthData({});
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
     }
 
     const handleRefreshToken = (token, refreshToken) => {

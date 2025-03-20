@@ -9,7 +9,8 @@ namespace TooDoo.Core.Services.Contracts
     {
         Task<LoginResponse> Login(UserLoginModel model);
         Task<MethodResponse> Register(UserRegisterModel model);
+        Task Logout(HttpRequest request, HttpResponse response);
         Task<LoginResponse> RefreshToken(HttpRequest request, HttpResponse response);
-        void SetAuthCookies(HttpResponse response, string accessToken, string refreshToken);
+        Task SetAuthCookies(HttpResponse response, string accessToken, string refreshToken);
     }
 }

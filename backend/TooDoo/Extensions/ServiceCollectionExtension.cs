@@ -27,9 +27,10 @@ namespace TooDoo.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddCors(x => x.AddDefaultPolicy(p =>
+            services.AddCors(options => options.AddPolicy("AllowFrontEnd",p =>
             {
                 p.WithOrigins("http://localhost:5173")
+                .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
             }));
@@ -70,9 +71,9 @@ namespace TooDoo.Extensions
             });
 
             services.ConfigureApplicationCookie(options => {
-                options.Cookie.HttpOnly = false;
+                options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SameSite = SameSiteMode.Strict;
             });
 
             services.AddAuthorization();

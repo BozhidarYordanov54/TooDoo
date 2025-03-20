@@ -33,15 +33,16 @@ namespace TooDoo.Controllers
 
             var response = await _authenticationService.Register(model);
 
-            if (!response.Success){
+            if (!response.Success)
+            {
                 return BadRequest(response.Message);
             }
 
             return Ok(new { message = response.Message });
         }
 
-        [HttpPost("login")]
         [AllowAnonymous]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
             if (!ModelState.IsValid)
@@ -52,11 +53,20 @@ namespace TooDoo.Controllers
             var response = await _authenticationService.Login(model);
 
             if (!response.Success)
-                return BadRequest(response.Message);
+                return BadRequest(new {message = response.Message});
 
-            _authenticationService.SetAuthCookies(Response, response.Token, response.RefreshToken);
+            await _authenticationService.SetAuthCookies(Response, response.Token, response.RefreshToken);
 
             return Ok(new { response.Username, response.Token, response.RefreshToken, response.Message });
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _authenticationService.Logout(Request, Response);
+
+            return Ok();
         }
 
         [AllowAnonymous]
@@ -65,12 +75,12 @@ namespace TooDoo.Controllers
         {
             var refreshRequest = await _authenticationService.RefreshToken(Request, Response);
 
-            if(!refreshRequest.Success)
+            if (!refreshRequest.Success)
             {
-                return BadRequest(refreshRequest.Message);
+                return Unauthorized(refreshRequest.Message);
             }
 
-            _authenticationService.SetAuthCookies(Response, refreshRequest.Token, refreshRequest.RefreshToken);
+            await _authenticationService.SetAuthCookies(Response, refreshRequest.Token, refreshRequest.RefreshToken);
 
             return Ok(refreshRequest);
         }
