@@ -5,10 +5,11 @@ using TooDoo.Core.Models.User;
 
 namespace TooDoo.Core.Services.Contracts
 {
-    public interface IAuthenticationService
+    public interface IAuthService
     {
         Task<LoginResponse> Login(UserLoginModel model);
         Task<MethodResponse> Register(UserRegisterModel model);
-        Task<LoginResponse> RefreshToken(UserRefreshTokenModel model);
+        Task<LoginResponse> RefreshToken(HttpRequest request, HttpResponse response);
+        void SetAuthCookies(HttpResponse response, string accessToken, string refreshToken);
     }
 }

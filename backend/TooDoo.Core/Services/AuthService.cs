@@ -10,24 +10,27 @@ using TooDoo.Core.Services.Contracts;
 using TooDoo.Infrastructure.Data.Models;
 using Microsoft.Extensions.Logging;
 using TooDoo.Core.Models.Auth;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace TooDoo.Core.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthService : IAuthService
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<AuthenticationService> _logger;
+        private readonly ILogger<AuthService> _logger;
 
         private readonly string _jwtSecret;
         private readonly int _accessTokenExpiryMinutes;
 
-        public AuthenticationService(UserManager<User> userManager, IConfiguration configuration, ILogger<AuthenticationService> logger)
+        public AuthService(UserManager<User> userManager, IConfiguration configuration, ILogger<AuthService> logger)
         {
             _userManager = userManager;
             _configuration = configuration;
             _logger = logger;
-            
+
             _jwtSecret = _configuration["JwtSettings:Secret"] ?? throw new ArgumentNullException("JWT Key not found");
             _accessTokenExpiryMinutes = int.Parse(_configuration["JwtSettings:AccessTokenExpiryMinutes"] ?? "30");
         }
@@ -37,13 +40,13 @@ namespace TooDoo.Core.Services
         /// </summary>
         public async Task<LoginResponse> Login(UserLoginModel model)
         {
-            if(model.UserName == null)
+            if (model.UserName == null)
             {
                 return new LoginResponse("Invalid password or email/username", false);
             }
 
             var user = await FindByUserName(model.UserName);
-            
+
             if (user == null)
             {
                 return new LoginResponse("Invalid password or email/username", false);
@@ -97,55 +100,43 @@ namespace TooDoo.Core.Services
         /// <summary>
         /// Refreshes the JWT token using the refresh token
         /// </summary>
-        public async Task<LoginResponse> RefreshToken(UserRefreshTokenModel model)
+        public async Task<LoginResponse> RefreshToken(HttpRequest request, HttpResponse response)
         {
-            var principal = GetTokenPrincipal(model.Token);
-
-            if(principal?.Identity?.Name == null)
+            string refreshToken = request.Cookies["RefreshToken"] ?? string.Empty;
+            if (!string.IsNullOrEmpty(refreshToken))
             {
-                return new LoginResponse("Invalid token", false);
+                var user = await FindByToken(refreshToken);
+
+                DateTime tokenExpiration = user.RefreshTokenExpiry;
+
+                if (await IsRefreshTokenValid(tokenExpiration))
+                {
+                    string newToken = GenerateAccessToken(user);
+                    return new LoginResponse("Token refreshed", newToken, refreshToken, "", true);
+                }
             }
-
-            var user = await FindByUserName(principal.Identity.Name);
-
-
-            if (user == null || user.RefreshToken != model.RefreshToken)
-            {
-                Console.WriteLine($"Here");
-                return new LoginResponse("Invalid user or token", false);
-            }
-
-            string accessToken = GenerateAccessToken(user);
-            string refreshToken = GenerateRefreshToken();
-
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiry = DateTime.UtcNow.AddHours(12);
-            await _userManager.UpdateAsync(user);
-
-            return new LoginResponse(user.UserName, accessToken, refreshToken, "Token refreshed", true);
+            return new LoginResponse();
         }
 
-        private ClaimsPrincipal? GetTokenPrincipal(string token)
+        public void SetAuthCookies(HttpResponse response, string accessToken, string refreshToken)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret));
-
-            var validation = new TokenValidationParameters
+            response.Cookies.Append("AccessToken", accessToken, new CookieOptions
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = key,
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = false,
-                ClockSkew = TimeSpan.Zero
-            };
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddSeconds(_accessTokenExpiryMinutes)
+            });
 
-            return new JwtSecurityTokenHandler().ValidateToken(token, validation, out _);
+            response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(12)
+            });
         }
 
-        
-        /// <summary>
-        /// Generates an access token (JWT)
-        /// </summary>
         private string GenerateAccessToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -175,20 +166,14 @@ namespace TooDoo.Core.Services
             return tokenHandler.WriteToken(token);
         }
 
-        /// <summary>
-        /// Generates a refresh token
-        /// </summary>
-        private string GenerateRefreshToken()
-            => Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        private string GenerateRefreshToken() => Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
-        /// <summary>
-        /// Checks if a user exists by email or username
-        /// </summary>
         private async Task<bool> UserExists(string userName) => await _userManager.FindByNameAsync(userName) != null;
 
-        /// <summary>
-        /// Helper method to find a user by email or username
-        /// </summary>
         private async Task<User?> FindByUserName(string userName) => await _userManager.FindByNameAsync(userName);
+        private async Task<User?> FindByToken(string refreshToken) => await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+
+        private async Task<bool> IsRefreshTokenValid(DateTime refreshTokenExpiry) => refreshTokenExpiry > DateTime.UtcNow;
+
     }
 }

@@ -11,12 +11,12 @@ namespace TooDoo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
-        private readonly ILogger<AuthenticationController> _logger;
+        private readonly IAuthService _authenticationService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthenticationController(IAuthenticationService authenticationService, ILogger<AuthenticationController> logger)
+        public AuthController(IAuthService authenticationService, ILogger<AuthController> logger)
         {
             _authenticationService = authenticationService;
             _logger = logger;
@@ -54,23 +54,25 @@ namespace TooDoo.Controllers
             if (!response.Success)
                 return BadRequest(response.Message);
 
-            // SetCookies(HttpContext, response.Token, response.RefreshToken);
+            _authenticationService.SetAuthCookies(Response, response.Token, response.RefreshToken);
 
             return Ok(new { response.Username, response.Token, response.RefreshToken, response.Message });
         }
 
         [AllowAnonymous]
         [HttpPost("refreshToken")]
-        public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
+        public async Task<IActionResult> RefreshToken()
         {
-            Console.WriteLine($"{ model.Token } { model.RefreshToken }");
-            var loginRequest = await _authenticationService.RefreshToken(model);
-            if(!loginRequest.Success)
+            var refreshRequest = await _authenticationService.RefreshToken(Request, Response);
+
+            if(!refreshRequest.Success)
             {
-                return BadRequest(loginRequest.Message);
+                return BadRequest(refreshRequest.Message);
             }
 
-            return Ok(loginRequest);
+            _authenticationService.SetAuthCookies(Response, refreshRequest.Token, refreshRequest.RefreshToken);
+
+            return Ok(refreshRequest);
         }
 
         private List<string> GetModelErrors()

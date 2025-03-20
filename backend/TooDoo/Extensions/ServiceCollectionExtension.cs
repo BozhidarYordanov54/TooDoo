@@ -36,7 +36,7 @@ namespace TooDoo.Extensions
 
             services.AddScoped<IRepository, Repository>();
 
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
 
             return services;
@@ -69,12 +69,11 @@ namespace TooDoo.Extensions
                 };
             });
 
-            // services.AddSession(o => 
-            // {
-            //     o.IdleTimeout = TimeSpan.FromMinutes(30);
-            //     o.Cookie.HttpOnly = true;
-            //     o.Cookie.IsEssential = true;
-            // });
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.HttpOnly = false;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
 
             services.AddAuthorization();
 
