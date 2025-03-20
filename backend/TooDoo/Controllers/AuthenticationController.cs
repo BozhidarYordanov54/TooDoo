@@ -52,7 +52,7 @@ namespace TooDoo.Controllers
             var response = await _authenticationService.Login(model);
 
             if (!response.Success)
-                return Unauthorized(response.Message);
+                return BadRequest(response.Message);
 
             // SetCookies(HttpContext, response.Token, response.RefreshToken);
 
@@ -63,6 +63,7 @@ namespace TooDoo.Controllers
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(UserRefreshTokenModel model)
         {
+            Console.WriteLine($"{ model.Token } { model.RefreshToken }");
             var loginRequest = await _authenticationService.RefreshToken(model);
             if(!loginRequest.Success)
             {

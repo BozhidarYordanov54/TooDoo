@@ -6,11 +6,35 @@ const registerBaseURL = "http://localhost:5058/api/authentication/register";
 const loginBaseURL = "http://localhost:5058/api/authentication/login";
 const refreshTokenBaseURL = "http://localhost:5058/api/authentication/refreshToken";
 
+export const useRefreshToken = () => {
+    const getNewToken = async (token, refreshToken) => {
+        console.log(token, refreshToken);
+        try {
+            const response = await axios.post(
+                refreshTokenBaseURL,
+                { token: token, refreshToken: refreshToken },
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            if(response.status === 200){
+                console.log(response);
+                return response;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return {
+        getNewToken,
+    };
+}
+
 export const useRegister = () => {
     const register = async (username, password, confirmPassword) => {
         try {
             const response = await axios.post(
-                loginBaseURL,
+                registerBaseURL,
                 { username, password, confirmPassword },
                 { headers: { "Content-Type": "application/json" } }
             );

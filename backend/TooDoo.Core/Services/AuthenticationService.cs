@@ -108,8 +108,10 @@ namespace TooDoo.Core.Services
 
             var user = await FindByUserName(principal.Identity.Name);
 
-            if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiry < DateTime.UtcNow)
+
+            if (user == null || user.RefreshToken != model.RefreshToken)
             {
+                Console.WriteLine($"Here");
                 return new LoginResponse("Invalid user or token", false);
             }
 
@@ -162,7 +164,7 @@ namespace TooDoo.Core.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddSeconds(20),
                 NotBefore = DateTime.UtcNow,
                 Issuer = "https://localhost:5058",
                 Audience = "https://localhost:5058",

@@ -8,6 +8,7 @@ export const AuthContext = createContext(
         handleLogin: () => { },
         handleRegister: () => { },
         handleLogout: () => { },
+        handleRefreshToken: () => { },
     }
 );
 

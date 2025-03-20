@@ -8,7 +8,6 @@ import "../../css/forms.css"
 import AuthAccountRedirect from "../common/AuthAccountRedirect";
 
 document.title += " | Login";
-const url = "http://localhost:5058/api/authentication/login";
 
 export default function Login() {
     const { handleLogin } = useAuth();
@@ -28,7 +27,6 @@ export default function Login() {
         const data = await login(username, password);
 
         if (data.status === 200) {
-            console.log(data);
             handleLogin(data);
             navigate("/");
         }

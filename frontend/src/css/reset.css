@@ -7,7 +7,12 @@
 }
 
 body {
+    position: relative;
     background: #0a0a0a;
+}
+
+footer{
+    
 }
 
 input:-webkit-autofill,
