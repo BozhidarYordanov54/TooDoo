@@ -1,8 +1,6 @@
-
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 import { useLogin } from "../../api/authApi";
-import { AuthContext, useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import "../../css/forms.css"
 
 import AuthAccountRedirect from "../common/AuthAccountRedirect";
@@ -17,7 +15,6 @@ export default function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const [pending, setPending] = useState(false);
 
-    const navigate = useNavigate();
     const { login } = useLogin();
 
     const submitHandler = async (e) => {

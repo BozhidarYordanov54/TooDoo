@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
-import { AuthContext } from "../../context/AuthContext";
 
 import '../../css/forms.css'
 
 const fetchUrl = `api/profile/details`;
 
 export default function Profile() {
-	const[email, setEmail] = useState('');
-	const[firstName, setFirstName] = useState('');
-	const[lastName, setLastName] = useState('');
-	const[userName, setUserName] = useState('');
-	const[isLoading, setIsLoading] = useState(true);
+	const [email, setEmail] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [userName, setUserName] = useState('');
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const dataProfile = async () => {
@@ -25,10 +24,8 @@ export default function Profile() {
 					setLastName(response.data.model.lastName);
 					setUserName(response.data.model.userName);
 				}
-			} catch (error) {
-				console.error(error);
 			}
-			finally{
+			finally {
 				setIsLoading(false);
 			}
 		};
@@ -36,55 +33,65 @@ export default function Profile() {
 		dataProfile();
 	}, []);
 
-
-
-	const userProfileHandler = (event) => {
-		const { name, value } = event.target;
-	
-		if (name === "username") {
-			setUserName(value);
-		} else if (name === "firstName") {
-			setFirstName(value);
-		} else if (name === "lastName") {
-			setLastName(value);
+	const usernameHandler = (e) => {
+		if (e.target.value.length > 0) {
+			e.target.classList.add("filled");
 		}
-	};
+		setUserName(e.target.value);
+	}
 
-	if(isLoading){
+	const firstNameHandler = (e) => {
+		if (e.target.value.length > 0) {
+			e.target.classList.add("filled");
+		}
+		setFirstName(e.target.value);
+	}
+
+	const lastNameHandler = (e) => {
+		if (e.target.value.length > 0) {
+			e.target.classList.add("filled");
+		}
+		setLastName(e.target.value);
+	}
+
+	if (isLoading) {
 		return <div>Loading...</div>
 	}
 
 	return (
 		<div>
 			<h1>Profile</h1>
-			<form className="form profile" action="" method="post">
+			<form className="form profile" method="post">
 				<div className="form-group">
 					<input
+						className="filled"
 						type="text"
 						name="username"
 						id="username"
-						onChange={userProfileHandler}
+						onChange={usernameHandler}
 						value={userName}
 					/>
 					<label htmlFor="username">Username</label>
 				</div>
 				<div className="form-group">
 					<input
+						className="filled"
 						type="text"
 						name="firstName"
 						id="firstName"
-						onChange={userProfileHandler}
+						onChange={firstNameHandler}
 						value={firstName} />
 					<label htmlFor="firstName">First name</label>
 				</div>
 				<div className="form-group">
 					<input
+						className="filled"
 						type="text"
 						name="lastName"
 						id="lastName"
-						onChange={userProfileHandler}
+						onChange={lastNameHandler}
 						value={lastName} />
-					<label htmlFor="firstName">First name</label>
+					<label htmlFor="firstName">Last name</label>
 				</div>
 			</form>
 		</div>

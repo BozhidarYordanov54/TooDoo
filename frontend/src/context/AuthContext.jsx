@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../api/axios";
+import { useLogout } from "../api/authApi";
 
 export const AuthContext = createContext(
     {
@@ -19,6 +20,7 @@ export default function AuthProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
+    const { logout } = useLogout();
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -48,8 +50,8 @@ export default function AuthProvider({ children }) {
 
     };
 
-    const handleLogout = () => {
-        // Implement logout logic here
+    const handleLogout = async () => {
+        await logout();
         setIsAuthenticated(false);
     };
 
