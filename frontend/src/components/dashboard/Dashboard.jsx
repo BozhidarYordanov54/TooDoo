@@ -1,13 +1,22 @@
-import '../../css/dashboard-home.css';
-import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faTable, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import Card from './Card';
-import WorkSpaceElement from './WorkSpaceElement';
 import { useState } from 'react';
 
+import '../../css/dashboard-home.css';
+
+import WorkSpaceElement from './WorkSpaceElement';
+import Workspace from './Workspace';
+import LatestBoard from './LatestBoard';
+
+//! Static to be removed
+import imageURL from '../../static/images/best-iphone-calendar-apps.jpg';
+
+
 export default function Dashboard() {
-    const[latestBoards, setLatestBoards] = useState([]);
+    const [latestBoards, setLatestBoards] = useState([]);
+
+    const data = {
+        imgUrl: imageURL,
+        title: 'Board 1',
+    }
 
     return (
         <>
@@ -15,8 +24,8 @@ export default function Dashboard() {
                 <div className="side-menu">
                     <h2 className="side-menu-header">Menu</h2>
                     <div className="actions-wrapper">
-                        <button type='submit' className="add-new-workspace">Add workspace</button>
-
+                        <button type='submit' className="btn add-new-workspace">Add workspace</button>
+                        
                     </div>
                     <div className="workspaces-wrapper">
                         <p className='workspaces'>Workspaces</p>
@@ -32,33 +41,12 @@ export default function Dashboard() {
                     <div className="latest-boards cards-container">
                         <h2>Latest boards</h2>
                         <div className="boards-wrapper cards-wrapper">
-                            <Card />
-                            <Card />
-                            <Card />
-                            <Card />
-                            <Card />
+                            <LatestBoard props={data}/>
                         </div>
                     </div>
                     <div className="workspaces">
                         <h3>Your workspaces</h3>
-                        <div className="workspace-wrapper">
-                            <div className="header-wrapper">
-                                <h4>Workspace name</h4>
-                                <div className="actions">
-                                    <NavLink to='/board/members'>Boards <FontAwesomeIcon icon={faTable}/></NavLink>
-                                    <NavLink to='/board/members'>Members <FontAwesomeIcon icon={faUsers}/></NavLink>
-                                    <NavLink to='/board/settings'>Settings <FontAwesomeIcon icon={faGear}/></NavLink>
-                                </div>
-                            </div>
-
-                            <div className="boards-wrapper">
-                                <Card />
-                                <Card />
-                                <Card />
-                                <Card />
-                                <Card />
-                            </div>
-                        </div>
+                        <Workspace props={data}/>
                     </div>
                 </div>
             </div>
