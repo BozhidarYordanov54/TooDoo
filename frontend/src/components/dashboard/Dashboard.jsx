@@ -11,7 +11,6 @@ import imageURL from '../../static/images/best-iphone-calendar-apps.jpg';
 
 
 export default function Dashboard() {
-    const [latestBoards, setLatestBoards] = useState([]);
 
     const data = {
         imgUrl: imageURL,

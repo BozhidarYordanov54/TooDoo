@@ -15,6 +15,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
+import Members from './components/board/Members';
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path='auth/register' element={<Register />} />
                 <Route path='user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path='board/members/:boardID' element={<PrivateRoute><Members /></PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
