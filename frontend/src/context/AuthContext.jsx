@@ -1,46 +1,67 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { axiosPrivate } from "../api/axios";
 
 export const AuthContext = createContext(
     {
-        username: '',
-        token: '',
-        refreshToken: '',
-        handleLogin: () => { },
+        isAuthenticated: false,
         handleRegister: () => { },
-        handleLogout: () => { },
-        handleRefreshToken: () => { },
+        handleLogin: () => { },
+        handleLogout: () => { }
     }
 );
 
-export function useAuth(){
+export function useAuth() {
     return useContext(AuthContext);
 }
 
 export default function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setUser({ token });
+        const checkAuthStatus = async () => {
+            try {
+                const response = await axiosPrivate.get("api/auth/checkAuth");
+
+                if (response.status === 200) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } catch (error) {
+                setIsAuthenticated(false);
+            } finally {
+                setIsLoading(false);
+            }
         }
-    }, []);
 
-    const login = (data) => {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        setUser({ data });
-    }
+        checkAuthStatus();
+    }, [isAuthenticated]);
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        setUser(null);
+    const handleRegister = (userData) => {
+        // Implement registration logic here
+        console.log("Registering user:", userData);
+    };
+
+    const handleLogin = (credentials) => {
+        // Implement login logic here
+        console.log("Logging in with credentials:", credentials);
+        setIsAuthenticated(true);
+        navigate("/dashboard");
+
+    };
+
+    const handleLogout = () => {
+        // Implement logout logic here
+        console.log("Logging out");
+        setIsAuthenticated(false);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
-            {children}
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, handleRegister, handleLogin, handleLogout }}>
+            {!isLoading && children}
         </AuthContext.Provider>
-    )
+    );
 }

@@ -20,7 +20,7 @@ const loggedInLinks = [
 ];
 
 export default function Header() {
-    const { token, username, handleLogout } = useContext(AuthContext);
+    const { isAuthenticated, handleLogout } = useContext(AuthContext);
 
     return (
         <header className="site-header">
@@ -33,7 +33,7 @@ export default function Header() {
 
             <nav className="site-nav">
                 <ul className="nav-list">
-                    {token
+                    {isAuthenticated
                         ? loggedInLinks.map((link) => {
                             return (
                                 <li key={link.key} className="nav-item">

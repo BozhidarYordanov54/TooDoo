@@ -7,13 +7,9 @@
 }
 
 body {
-    position: relative;
     background: #0a0a0a;
 }
 
-footer{
-    
-}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -25,4 +21,14 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #333;
+    border-radius: 10px;
 }

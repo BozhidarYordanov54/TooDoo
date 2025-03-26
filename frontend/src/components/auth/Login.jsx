@@ -1,8 +1,8 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { useLogin } from "../../api/authApi";
-import { useAuth } from "../../context/AuthContext";
+import { AuthContext, useAuth } from "../../context/AuthContext";
 import "../../css/forms.css"
 
 import AuthAccountRedirect from "../common/AuthAccountRedirect";
@@ -24,11 +24,13 @@ export default function Login() {
         e.preventDefault();
         setPending(true);
 
-        const data = await login(username, password);
+        const response = await login(username, password);
 
-        if (data.status === 200) {
-            handleLogin(data);
-            navigate("/");
+        if(response.status === 200){
+            handleLogin(response.data);
+        } else {
+            setError(response.data.message);
+            setPending(false);
         }
     };
 
@@ -81,9 +83,7 @@ export default function Login() {
                             <label htmlFor="rememberMe" className="check-box">Remember me?</label>
                         </div>
                         <div className="form-group">
-                            <button className="submit" type="submit" disabled={pending}>
-                                Login
-                            </button>
+                            <button className="submit" type="submit" disabled={pending}>Login</button>
                         </div>
                     </form>
                     <p className="error">{error}</p>
@@ -92,7 +92,7 @@ export default function Login() {
                         <p>Don't have an account?</p>
                     </div>
                 </div>
-                <AuthAccountRedirect isLogin={true}/>
+                <AuthAccountRedirect isLogin={true} />
             </div>
         </>
     );

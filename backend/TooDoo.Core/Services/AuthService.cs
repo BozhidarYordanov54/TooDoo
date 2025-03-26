@@ -146,9 +146,12 @@ namespace TooDoo.Core.Services
             if (!string.IsNullOrEmpty(refreshToken))
             {
                 var user = await FindByToken(refreshToken);
-                user.RefreshToken = null;
-                user.RefreshTokenExpiry = new DateTime();
-                await _userManager.UpdateAsync(user);
+                if(user != null)
+                {
+                    user.RefreshToken = null;
+                    user.RefreshTokenExpiry = new DateTime();
+                    await _userManager.UpdateAsync(user);
+                }
             }
 
             response.Cookies.Delete("AccessToken");

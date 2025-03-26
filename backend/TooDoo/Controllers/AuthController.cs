@@ -69,6 +69,20 @@ namespace TooDoo.Controllers
             return Ok();
         }
 
+        [Authorize]
+        [HttpGet("checkAuth")]
+        public IActionResult CheckAuth()
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (username == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { username });
+        }
+
         [AllowAnonymous]
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken()

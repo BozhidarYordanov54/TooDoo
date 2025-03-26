@@ -1,44 +1,92 @@
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { axiosPrivate } from "../../api/axios";
 import { AuthContext } from "../../context/AuthContext";
 
-const fetchUrl = `http://localhost:5058/api/profile/details`;
+import '../../css/forms.css'
+
+const fetchUrl = `api/profile/details`;
 
 export default function Profile() {
-	const { token } = useContext(AuthContext);
-	const [profile, setProfile] = useState({});
+	const[email, setEmail] = useState('');
+	const[firstName, setFirstName] = useState('');
+	const[lastName, setLastName] = useState('');
+	const[userName, setUserName] = useState('');
+	const[isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const dataProfile = async () => {
 			try {
-				const response = await axios.get(fetchUrl, {
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				});
+				setIsLoading(true);
+				const response = await axiosPrivate.get(fetchUrl);
 
 				if (response.status === 200) {
-					setProfile(response.data.model);
+					setEmail(response.data.model.email);
+					setFirstName(response.data.model.firstName);
+					setLastName(response.data.model.lastName);
+					setUserName(response.data.model.userName);
 				}
 			} catch (error) {
 				console.error(error);
+			}
+			finally{
+				setIsLoading(false);
 			}
 		};
 
 		dataProfile();
 	}, []);
 
-	if (profile === null) {
-		return <p>Loading...</p>;
+
+
+	const userProfileHandler = (event) => {
+		const { name, value } = event.target;
+	
+		if (name === "username") {
+			setUserName(value);
+		} else if (name === "firstName") {
+			setFirstName(value);
+		} else if (name === "lastName") {
+			setLastName(value);
+		}
+	};
+
+	if(isLoading){
+		return <div>Loading...</div>
 	}
 
 	return (
 		<div>
 			<h1>Profile</h1>
-			<p>First Name: {profile.firstName}</p>
-			<p>Last Name: {profile.lastName}</p>
-			<p>Email: {profile.userName}</p>
-			{/* Render other profile details */}
+			<form className="form profile" action="" method="post">
+				<div className="form-group">
+					<input
+						type="text"
+						name="username"
+						id="username"
+						onChange={userProfileHandler}
+						value={userName}
+					/>
+					<label htmlFor="username">Username</label>
+				</div>
+				<div className="form-group">
+					<input
+						type="text"
+						name="firstName"
+						id="firstName"
+						onChange={userProfileHandler}
+						value={firstName} />
+					<label htmlFor="firstName">First name</label>
+				</div>
+				<div className="form-group">
+					<input
+						type="text"
+						name="lastName"
+						id="lastName"
+						onChange={userProfileHandler}
+						value={lastName} />
+					<label htmlFor="firstName">First name</label>
+				</div>
+			</form>
 		</div>
 	);
 }
