@@ -27,18 +27,14 @@ export default function AuthProvider({ children }) {
 
                 if (response.status === 200) {
                     setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
                 }
-            } catch (error) {
-                setIsAuthenticated(false);
             } finally {
                 setIsLoading(false);
             }
         }
 
         checkAuthStatus();
-    }, [isAuthenticated]);
+    }, []);
 
     const handleRegister = (userData) => {
         // Implement registration logic here
@@ -55,7 +51,6 @@ export default function AuthProvider({ children }) {
 
     const handleLogout = () => {
         // Implement logout logic here
-        console.log("Logging out");
         setIsAuthenticated(false);
     };
 

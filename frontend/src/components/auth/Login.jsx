@@ -35,10 +35,18 @@ export default function Login() {
     };
 
     const setUsernameHandler = (e) => {
+        if(e.target.value.length > 0){
+            e.target.classList.add("filled");
+        }
+
         setUsername(e.target.value);
     };
 
     const setPasswordHandler = (e) => {
+        if(e.target.value.length > 0){
+            e.target.classList.add("filled");
+        }
+        
         setPassword(e.target.value);
     }
 

@@ -50,7 +50,9 @@
 }
 
 .form .form-group>input[type="text"]:focus+label,
-.form .form-group>input[type="password"]:focus+label {
+.form .form-group>input[type="password"]:focus+label,
+.form .form-group>input[type="text"].filled+label,
+.form .form-group>input[type="password"].filled+label {
     top: 1em;
     left: 0;
     transform: translateY(-50%);
