@@ -28,7 +28,8 @@ axiosPrivate.interceptors.response.use(
                 // Attempt to refresh token (replace with your API call)
                 await axios.post(`${baseURL}/api/auth/refreshToken`, {}, { withCredentials: true });
 
-                return axiosPrivate(originalRequest);
+                const newResponse = await axiosPrivate(originalRequest);
+                return newResponse;
             } catch (err) {
                 console.error("Refresh token request failed", err);
                 return Promise.reject(err);

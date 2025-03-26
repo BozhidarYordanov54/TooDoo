@@ -17,7 +17,6 @@ export const useRefreshToken = () => {
                 return response;
             }
         } catch (error) {
-            console.log(error);
         }
     };
 
