@@ -39,9 +39,8 @@ export default function Header() {
                                 <li key={link.key} className="nav-item">
                                     <NavLink
                                         to={link.path}
-                                        className={`nav-link ${link.text == "Logout" ? "auth" : ""
-                                            }`}
-                                        onClick={link.text == `Logout` ? handleLogout : ""}
+                                        className={`nav-link ${link.text == "Logout" ? "auth" : ""}`}
+                                        onClick={link.text == `Logout` ? handleLogout : undefined}
                                     >
                                         {link.text}
                                     </NavLink>
@@ -53,9 +52,7 @@ export default function Header() {
                                 <li key={link.key} className="nav-item">
                                     <NavLink
                                         to={link.path}
-                                        className={`nav-link ${link.text == `Login` ? "auth" : ""
-                                            }`}
-                                    >
+                                        className={`nav-link ${link.text == `Login` ? "auth" : ""}`}>
                                         {link.text}
                                     </NavLink>
                                 </li>

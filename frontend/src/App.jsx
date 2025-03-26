@@ -17,25 +17,6 @@ import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
 
 export default function App() {
-    // const [authData, setAuthData] = useState({});
-
-    // const handleLogin = (authData) => {
-    //     setAuthData({username: authData.data.username, token: authData.data.token, refreshToken: authData.data.refreshToken});
-    // }
-
-    // const handleLogout = async () => {
-    //     try {
-    //         await axiosPrivate.post('/api/auth/logout');
-    //         setAuthData({});
-    //     } catch (error) {
-    //         console.error("Logout failed", error);
-    //     }
-    // }
-
-    // const handleRefreshToken = (token, refreshToken) => {
-    //     setAuthData({token: token, refreshToken: refreshToken});
-    // }
-
     return (
         <AuthProvider>
             <Header />

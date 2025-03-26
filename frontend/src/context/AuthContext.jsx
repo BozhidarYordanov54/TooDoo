@@ -43,7 +43,6 @@ export default function AuthProvider({ children }) {
 
     const handleLogin = (credentials) => {
         // Implement login logic here
-        console.log("Logging in with credentials:", credentials);
         setIsAuthenticated(true);
         navigate("/dashboard");
 

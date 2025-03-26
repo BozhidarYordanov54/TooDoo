@@ -12,7 +12,7 @@ export const useRefreshToken = () => {
         try {
             const response = await axiosPrivate.post(refreshTokenBaseURL);
 
-            if(response.status === 200){
+            if (response.status === 200) {
                 console.log(response);
                 return response;
             }
@@ -34,7 +34,7 @@ export const useRegister = () => {
                 { headers: { "Content-Type": "application/json" } }
             );
 
-            if(response.status === 200){
+            if (response.status === 200) {
                 useLogin(username, password);
             }
         } catch (error) {
@@ -50,17 +50,17 @@ export const useRegister = () => {
 export const useLogin = () => {
     const abortController = new AbortController();
     const login = async (username, password) => {
-        try{
-            const response = await axiosPrivate.post(loginBaseURL, 
+        try {
+            const response = await axiosPrivate.post(loginBaseURL,
                 { username, password },
                 { headers: { "Content-Type": "application/json" } },
                 { signal: abortController.signal })
 
-            if(response.status === 200){
+            if (response.status === 200) {
                 return response;
             }
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
@@ -69,8 +69,26 @@ export const useLogin = () => {
         return () => abortController.abort();
     }, []);
 
-    return{
+    return {
         login,
+    }
+}
+
+export const useLogout = () => {
+    const logout = async () => {
+        try {
+            const response = await axiosPrivate.post('api/auth/logout');
+            if (response.status === 200) {
+                console.log(response);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    return{
+        logout,
     }
 }
 
