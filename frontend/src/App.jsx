@@ -15,7 +15,8 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
-import Members from './components/board/Members';
+import Members from './components/board/members/Members';
+import Pricing from './components/pricing/Pricing';
 
 export default function App() {
     return (
@@ -23,11 +24,12 @@ export default function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path='auth/login' element={<Login />} />
-                <Route path='auth/register' element={<Register />} />
-                <Route path='user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+                <Route path='/auth/login' element={<Login />} />
+                <Route path='/auth/register' element={<Register />} />
+                <Route path='/pricing' element={<Pricing />} />
+                <Route path='/user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path='board/members/:boardID' element={<PrivateRoute><Members /></PrivateRoute>} />
+                <Route path='/workspace/members/:boardID' element={<PrivateRoute><Members /></PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
