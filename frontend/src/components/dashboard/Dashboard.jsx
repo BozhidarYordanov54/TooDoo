@@ -8,14 +8,30 @@ import WorkSpaceElement from './WorkSpaceElement';
 import LatestBoard from './LatestBoard';
 import Workspace from './Workspace';
 
-import imageURL from '../../static/images/best-iphone-calendar-apps.jpg';
 
-const data = {
-    id: 1,
-    imgUrl: imageURL,
-    title: 'Board 1',
-    link: 'workspace'
-}
+const workspaces = [
+    { id: 1, title: 'First workspace', link: 'workspace', 
+        boards: [
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My Second Board', imgUrl: '/images/sky.jpg', link: 'board'},
+            {title: 'My Third Board', imgUrl: '/images/lavender.jpg', link: 'board'},
+        ] 
+    },
+    { id: 2, title: 'Second workspace', link: 'workspace', 
+        boards: [
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+        ] 
+    },
+    { id: 3, title: 'Third workspace', link: 'workspace', 
+        boards: [
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+        ] 
+    },
+];
 
 export default function Dashboard() {
     return (
@@ -40,14 +56,15 @@ export default function Dashboard() {
                     <div className="latest-boards cards-container">
                         <h2>Latest boards</h2>
                         <div className="boards-wrapper cards-wrapper">
-                            <LatestBoard props={data} />
+                            <LatestBoard props={workspaces} />
                         </div>
                     </div>
                     <div className="workspaces">
                         <h3>Your workspaces</h3>
                         <div className="workspaces-list-big">
-                            <Workspace props={data} />
-                            <Workspace props={data} />
+                            {workspaces.map((item) => {
+                                return <Workspace props={item} key={item.id} />
+                            })}
                         </div>
                     </div>
                 </div>

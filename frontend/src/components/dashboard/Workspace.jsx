@@ -8,7 +8,7 @@ export default function Workspace({ props }) {
     return (
         <div className="workspace-wrapper">
             <div className="header-wrapper">
-                <h4>Workspace name</h4>
+                <h4>{props.title}</h4>
                 <div className="actions">
                     <button className="add-new-board">Add board <FontAwesomeIcon icon={faPlus} /></button>
                     <NavLink to={`/${props.link}/boards/${props.id}`}>Boards <FontAwesomeIcon icon={faTable} /></NavLink>
@@ -18,9 +18,9 @@ export default function Workspace({ props }) {
             </div>
 
             <div className="boards-wrapper">
-                <CardLink title={props.title} imgURL={props.imgUrl} link={props.title} />
-                <CardLink title={props.title} imgURL={props.imgUrl} link={props.title} />
-                <CardLink title={props.title} imgURL={props.imgUrl} link={props.title} />
+                {props.boards.map((item) => {
+                    return <CardLink title={item.title} imgURL={item.imgUrl} link={item.link} />
+                })}
             </div>
         </div>
     )
