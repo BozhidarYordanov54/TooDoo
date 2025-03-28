@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 
 export default function CardLink({ link, title, imgURL }) {
     return (
-        <NavLink to={`board/${link}`}>
+        <NavLink to={`${link}`}>
             <div className="template board">
                 <div className="img-wrapper">
                     <img src={imgURL} alt="template" />

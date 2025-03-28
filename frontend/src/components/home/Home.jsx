@@ -2,6 +2,8 @@ import { NavLink } from 'react-router';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import FloatingCards from './FloatingCards';
+
 import '../../css/home.css';
 
 export default function Home() {
@@ -72,6 +74,8 @@ export default function Home() {
                         }
                     </div>
                 </section>
+
+                <FloatingCards />
             </div>
 
         </>

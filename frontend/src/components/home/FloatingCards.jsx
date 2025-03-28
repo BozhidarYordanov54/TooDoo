@@ -1,4 +1,4 @@
-import '../css/floating-cards.css';
+import '../../css/floating-cards.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareRootVariable, faLanguage, faEarthEurope, faDna, faFlaskVial, faCode, faAtom, faMusic, faPalette } from '@fortawesome/free-solid-svg-icons';

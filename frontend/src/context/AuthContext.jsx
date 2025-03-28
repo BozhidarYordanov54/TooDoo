@@ -22,6 +22,7 @@ export default function AuthProvider({ children }) {
     const navigate = useNavigate();
     const { logout } = useLogout();
 
+
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {

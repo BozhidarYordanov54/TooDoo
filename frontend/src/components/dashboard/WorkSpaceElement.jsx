@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faTable, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-export default function WorkSpaceElement() {
+export default function WorkSpaceElement({ link }) {
 
     const handleFolding = (event) => {
         const workspaceElement = event.currentTarget.closest('li');
