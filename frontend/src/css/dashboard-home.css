@@ -188,11 +188,13 @@
 .workspace-wrapper .header-wrapper .actions {
     display: flex;
     gap: 0.5em;
-    align-items: center;
 }
 
-.workspace-wrapper .header-wrapper a {
+.workspace-wrapper .header-wrapper a,
+.workspace-wrapper .header-wrapper button {
     text-decoration: none;
+    outline: none;
+    border: none;
     color: #c7c7c7;
     font-weight: 500;
     font-size: 14px;
@@ -200,12 +202,20 @@
     background: #2e2e2e;
     padding: 0.5em 1em;
     border-radius: 10px;
+    cursor: pointer;
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 
-.workspace-wrapper .header-wrapper a:hover {
+.workspace-wrapper .header-wrapper a:hover,
+.workspace-wrapper .header-wrapper button:hover {
     color: #ffffff;
     background: #3b3b3d;
+}
+
+.workspaces-list-big{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 /** BUTTONS */

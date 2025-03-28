@@ -1,0 +1,49 @@
+.pricing-wrapper {
+    margin-top: 6em;
+    display: flex;
+    gap: 1em;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+.pricing-card {
+    height: 700px;
+    width: 450px;
+    transform: scale(0.9);
+    background-color: #2e2e2e;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #efefefef;
+    border-radius: 15px;
+    box-shadow: #000000 0px 48px 100px 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+.benefits-wrapper .benefits-list{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.benefits-wrapper .benefits-list li{
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #efefefef;
+}
+
+.benefits-wrapper .benefits-list li svg{
+    color: #b392f0;
+    margin-right: 0.5em;
+}
+
+.pricing-card:hover {
+    box-shadow: #b392f0 0px 48px 100px 0px;
+    transform: scale(1);
+}

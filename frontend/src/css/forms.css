@@ -27,14 +27,26 @@
     position: relative;
 }
 
+.form .multiple-input-wrapper{
+    display: flex;
+    gap: 1rem;
+}
+
 .form .form-group>input[type="text"],
 .form .form-group>input[type="password"] {
-    width: 300px;
     padding: 1rem;
     margin: 1rem 0;
     border: none;
     outline: none;
     border-radius: 5px;
+}
+
+.form .form-group>input[type="text"]{
+    width: 300px;
+}
+
+.form .form-group>input[type="password"]{
+    width: 100%;
 }
 
 .form .form-group>label:not([for="rememberMe"]) {
@@ -62,7 +74,7 @@
 .form .form-group>button {
     border-radius: 9999px;
     margin: 1em 0;
-    width: 300px;
+    width: 100%;
     color: #ffffff;
     font-size: 1.2rem;
     outline: none;

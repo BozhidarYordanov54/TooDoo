@@ -1,0 +1,93 @@
+.members{
+    margin-top: 6em;
+}
+
+.member-header{
+    text-align: center;
+}
+
+.member-list{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+.member-info{
+    display: flex;
+}
+
+.member{
+    font-size: 14px;
+    width: 1000px;
+    min-height: 40px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #2e2e2e;
+    color: #adadad;
+    padding: 0.5em 0.75em;
+}
+
+.member .actions{
+    display: flex;
+    gap: 1em;
+}
+
+.member-name{
+    font-weight: 600;
+}
+
+.member .actions button{
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    width: 110px;
+    cursor: pointer;
+}
+
+.btn.ban{
+    background-color: #d13131;
+    color: white;
+}
+
+.btn.ban:hover{
+    background-color: #ff0000;
+}
+
+.btn.remove{
+    background-color: #d13131;
+    color: white;
+}
+
+.btn.change-role{
+    background-color: #b392f0;
+    color: white;
+}
+
+.btn-wrapper{
+    position: relative;
+}
+
+.btn-info{
+    position: absolute;
+    background: #2e2e2e;
+    color: #adadad;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    width: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    pointer-events: none;
+    cursor: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    transition-delay: 0.5s;
+}
+
+.btn-wrapper:hover .btn-info{
+    opacity: 1;
+}
