@@ -1,34 +1,31 @@
-import { Routes, Route } from 'react-router-dom';
-import PrivateRoute from '../auth/PrivateRoute';
-import { useState } from 'react';
-
 import '../../css/dashboard-home.css';
 
 import WorkSpaceElement from './WorkSpaceElement';
 import LatestBoard from './LatestBoard';
-import Workspace from './Workspace';
+import Workspaces from './Workspaces';
 
 
 const workspaces = [
     { id: 1, title: 'First workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
-            {title: 'My Second Board', imgUrl: '/images/sky.jpg', link: 'board'},
-            {title: 'My Third Board', imgUrl: '/images/lavender.jpg', link: 'board'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My Second Board', imgUrl: '/images/sky.jpg', link: '/workspace/board/1'},
+            {title: 'My Third Board', imgUrl: '/images/lavender.jpg', link: '/workspace/board/1'},
         ] 
     },
     { id: 2, title: 'Second workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
-            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: 'board'},
-            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
         ] 
     },
     { id: 3, title: 'Third workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: 'board'},
-            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: 'board'},
-            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: 'board'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: `/workspace/board/1`},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My Fourth Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
         ] 
     },
 ];
@@ -56,14 +53,14 @@ export default function Dashboard() {
                     <div className="latest-boards cards-container">
                         <h2>Latest boards</h2>
                         <div className="boards-wrapper cards-wrapper">
-                            <LatestBoard props={workspaces} />
+                            <LatestBoard props={workspaces[0]} />
                         </div>
                     </div>
                     <div className="workspaces">
                         <h3>Your workspaces</h3>
                         <div className="workspaces-list-big">
                             {workspaces.map((item) => {
-                                return <Workspace props={item} key={item.id} />
+                                return <Workspaces props={item} key={item.id} />
                             })}
                         </div>
                     </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 
 import '../../css/forms.css'
+import '../../css/profile.css'
 
 const fetchUrl = `api/profile/details`;
 
@@ -33,21 +34,37 @@ export default function Profile() {
 		dataProfile();
 	}, []);
 
-	const usernameHandler = (e) => {
+	useEffect(() => {
+        const inputs = document.querySelectorAll('.form-group input');
+        inputs.forEach((input) => {
+            if (input.value.length > 0) {
+                input.classList.add('filled');
+            }
+        });
+    }, [email, firstName, lastName, userName]);
+
+	const setEmailHandler = (e) => {
+		if (e.target.value.length > 0) {
+			e.target.classList.add("filled");
+		}
+		setEmail(e.target.value);
+	}
+
+	const setUsernameHandler = (e) => {
 		if (e.target.value.length > 0) {
 			e.target.classList.add("filled");
 		}
 		setUserName(e.target.value);
 	}
 
-	const firstNameHandler = (e) => {
+	const setFirstNameHandler = (e) => {
 		if (e.target.value.length > 0) {
 			e.target.classList.add("filled");
 		}
 		setFirstName(e.target.value);
 	}
 
-	const lastNameHandler = (e) => {
+	const setLastNameHandler = (e) => {
 		if (e.target.value.length > 0) {
 			e.target.classList.add("filled");
 		}
@@ -59,40 +76,54 @@ export default function Profile() {
 	}
 
 	return (
-		<div>
+		<div className="profile-wrapper">
 			<h1>Profile</h1>
 			<form className="form profile" method="post">
-				<div className="form-group">
-					<input
-						className="filled"
-						type="text"
-						name="username"
-						id="username"
-						onChange={usernameHandler}
-						value={userName}
-					/>
-					<label htmlFor="username">Username</label>
+				<div className="multiple-input-wrapper">
+					<div className="form-group">
+						<input
+							type="text"
+							name="firstName"
+							id="firstName"
+							onChange={setFirstNameHandler}
+							value={firstName}
+						/>
+						<label htmlFor="firstName">First Name</label>
+					</div>
+					<div className="form-group">
+						<input
+							type="text"
+							name="lastName"
+							id="lastName"
+							onChange={setLastNameHandler}
+							value={lastName}
+						/>
+						<label htmlFor="lastName">Last Name</label>
+					</div>
 				</div>
-				<div className="form-group">
-					<input
-						className="filled"
-						type="text"
-						name="firstName"
-						id="firstName"
-						onChange={firstNameHandler}
-						value={firstName} />
-					<label htmlFor="firstName">First name</label>
+				<div className="multiple-input-wrapper">
+					<div className="form-group">
+						<input
+							type="text"
+							name="email"
+							id="email"
+							onChange={setEmailHandler}
+							value={email}
+						/>
+						<label htmlFor="email">Email</label>
+					</div>
+					<div className="form-group">
+						<input
+							type="text"
+							name="username"
+							id="username"
+							onChange={setUsernameHandler}
+							value={userName}
+						/>
+						<label htmlFor="username">Username</label>
+					</div>
 				</div>
-				<div className="form-group">
-					<input
-						className="filled"
-						type="text"
-						name="lastName"
-						id="lastName"
-						onChange={lastNameHandler}
-						value={lastName} />
-					<label htmlFor="firstName">Last name</label>
-				</div>
+				<button className="btn submit" type="submit">Update profile</button>
 			</form>
 		</div>
 	);

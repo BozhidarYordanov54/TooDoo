@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Routes, Route } from 'react-router';
 
 // App components
@@ -15,8 +14,8 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
-import Members from './components/board/members/Members';
 import Pricing from './components/pricing/Pricing';
+import WorkspaceHome from './components/workspace/WorkspaceHome';
 
 export default function App() {
     return (
@@ -29,7 +28,7 @@ export default function App() {
                 <Route path='/pricing' element={<Pricing />} />
                 <Route path='/user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path='/workspace/members/:boardID' element={<PrivateRoute><Members /></PrivateRoute>} />
+                <Route path='/workspace/*' element={<PrivateRoute><WorkspaceHome/></PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />

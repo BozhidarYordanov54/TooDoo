@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom"
 
 export default function CardLink({ link, title, imgURL }) {
-    console.log(imgURL);
     return (
         <NavLink to={`${link}`}>
             <div className="template board">
