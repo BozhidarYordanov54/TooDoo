@@ -22,8 +22,8 @@ namespace TooDoo.Controllers
             _logger = logger;
         }
 
-        [HttpPost("register")]
         [AllowAnonymous]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
         {
             if (!ModelState.IsValid)

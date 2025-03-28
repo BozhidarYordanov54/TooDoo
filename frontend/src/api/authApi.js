@@ -1,41 +1,22 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosPrivate } from "./axios";
+import axios, { axiosPrivate } from "./axios";
 
-const registerBaseURL = "api/auth/register";
+const registerBaseURL = "/api/auth/register";
 const loginBaseURL = "/api/auth/login";
 const refreshTokenBaseURL = "api/auth/refreshToken";
 
-export const useRefreshToken = () => {
-    const getNewToken = async () => {
-        try {
-            const response = await axiosPrivate.post(refreshTokenBaseURL);
-
-            if (response.status === 200) {
-                console.log(response);
-                return response;
-            }
-        } catch (error) {
-        }
-    };
-
-    return {
-        getNewToken,
-    };
-}
-
 export const useRegister = () => {
-    const register = async (username, password, confirmPassword) => {
+    const register = async (username, firstName, lastName, email, password, confirmPassword) => {
         try {
             const response = await axios.post(
                 registerBaseURL,
-                { username, password, confirmPassword },
+                { username, firstName, lastName, email, password, confirmPassword },
                 { headers: { "Content-Type": "application/json" } }
             );
 
             if (response.status === 200) {
-                useLogin(username, password);
+                return response;
             }
         } catch (error) {
             console.log(error);
@@ -92,6 +73,24 @@ export const useLogout = () => {
     return{
         logout,
     }
+}
+
+export const useRefreshToken = () => {
+    const getNewToken = async () => {
+        try {
+            const response = await axiosPrivate.post(refreshTokenBaseURL);
+
+            if (response.status === 200) {
+                console.log(response);
+                return response;
+            }
+        } catch (error) {
+        }
+    };
+
+    return {
+        getNewToken,
+    };
 }
 
 
