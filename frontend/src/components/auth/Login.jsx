@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLogin } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 import "../../css/forms.css"
 
 import AuthAccountRedirect from "../common/AuthAccountRedirect";
 
-document.title += " | Login";
+const title = "TooDoo | Login";
 
 export default function Login() {
     const { handleLogin } = useAuth();
@@ -16,6 +16,10 @@ export default function Login() {
     const [pending, setPending] = useState(false);
 
     const { login } = useLogin();
+
+    useEffect( () => {
+        document.title = title;
+    }, []);
 
     const submitHandler = async (e) => {
         e.preventDefault();
