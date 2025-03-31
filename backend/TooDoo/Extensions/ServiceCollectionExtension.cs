@@ -81,6 +81,17 @@ namespace TooDoo.Extensions
 
             return services;
         }
+
+        public static IServiceCollection AddHttpsRedirection(this IServiceCollection services)
+        {
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5058;
+            });
+
+            return services;
+        }
     }
 
 

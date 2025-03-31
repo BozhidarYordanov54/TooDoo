@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using TooDoo.Core.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace TooDoo.Core.Services
 {

@@ -47,13 +47,17 @@ namespace TooDoo.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Invalid model state: {ModelState}", ModelState);
                 return BadRequest(GetModelErrors());
             }
 
             var response = await _authenticationService.Login(model);
 
             if (!response.Success)
+            {
+                _logger.LogWarning("Login failed: {Message}", response.Message);
                 return BadRequest(new {message = response.Message});
+            }
 
             await _authenticationService.SetAuthCookies(Response, response.Token, response.RefreshToken);
 
