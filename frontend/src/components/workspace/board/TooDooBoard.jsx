@@ -1,45 +1,60 @@
 import { useState } from "react";
-import { DndProvider, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import { DndContext } from "@dnd-kit/core";
 import BoardColumn from "./BoardColumn";
+import TaskDescription from "../task/TaskDescription";
 
-const ItemType = "CARD";
+
+const initialTasks = [
+    {
+        id: "1", content: {
+            title: "Task 1",
+            description: "Description for Task 1 aaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            dueDate: "2023-10-01",
+            priority: "High",
+        }, parent: "toodoo"
+    },
+    {
+        id: "2", content: {
+            title: "Task 2",
+            description: "Description for Task 2",
+            dueDate: "2023-10-02",
+            priority: "Medium",
+        }, parent: "toodoo"
+    },
+    {
+        id: "3", content: {
+            title: "Task 3",
+            description: "Description for Task 3",
+            dueDate: "2023-10-03",
+            priority: "Low",
+        }, parent: "inProgress"
+    },
+];
+
+import imageURL from '../../../../public/images/sky.jpg';
 
 export default function TooDooBoard() {
-    const [columns, setColumns] = useState({
-        todo: { title: "Too Doo", items: [{ id: "1", content: "Task 1" }, { id: "2", content: "Task 2" }] },
-        inProgress: { title: "In Progress", items: [] },
-        done: { title: "Done", items: [] },
-    });
+    const [tasks, setTasks] = useState(initialTasks);
 
-    const moveTask = (task, newColumnId) => {
-        setColumns((prevColumns) => {
-            const sourceColumn = prevColumns[task.columnId];
-            const destColumn = prevColumns[newColumnId];
-            const taskItem = sourceColumn.items.find((item) => item.id === task.id);
-
-            return {
-                ...prevColumns,
-                [task.columnId]: { ...sourceColumn, items: sourceColumn.items.filter((item) => item.id !== task.id) },
-                [newColumnId]: { ...destColumn, items: [...destColumn.items, taskItem] },
-            };
-        });
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+        if (over) {
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task.id === active.id ? { ...task, parent: over.id } : task
+                )
+            );
+        }
     };
 
     return (
-        <DndProvider backend={HTML5Backend}>
-            <div className="workspace-header">
-                <h1>TooDoo Board</h1>
-                <div className="board-header">
-                    <h2>Board Name</h2>
-                </div>
+        <DndContext onDragEnd={handleDragEnd}>
+
+            <div className="boards-wrapper toodoo">
+                <BoardColumn columnId="toodoo" columnName="Toodoo" tasks={tasks.filter((task) => task.parent === "toodoo")} />
+                <BoardColumn columnId="inProgress" columnName="In progress" tasks={tasks.filter((task) => task.parent === "inProgress")} />
+                <BoardColumn columnId="done" columnName="Done" tasks={tasks.filter((task) => task.parent === "done")} />
             </div>
-            <div className="board-container">
-                {Object.entries(columns).map(([columnId, column]) => (
-                    <BoardColumn key={columnId} columnId={columnId} column={column} moveTask={moveTask} ItemType={ItemType} />
-                ))}
-            </div>
-        </DndProvider>
+        </DndContext>
     );
 }

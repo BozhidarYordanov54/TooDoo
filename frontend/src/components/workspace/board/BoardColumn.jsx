@@ -1,33 +1,19 @@
-import TaskCard from "./TaskCard";
-import { useDrop } from "react-dnd";
+import { useDroppable } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import TaskCard from "./TaskCard";
 
-export default function BoardColumn({ columnId, column, moveTask, ItemType }) {
-    const [, drop] = useDrop({
-        accept: ItemType,
-        drop: (item) => {
-            if (item.columnId !== columnId) {
-                moveTask(item, columnId);
-            }
-        },
-    });
+export default function BoardColumn({ columnId, tasks, columnName }) {
+    const { isOver, setNodeRef } = useDroppable({ id: columnId });
 
     return (
-        <div className="board-column-container">
-            <div className="board-column">
-                <div ref={drop} >
-                    <h3 className="task-name">{column.title}</h3>
-                    {column.items.map((item, index) => (
-                        <TaskCard
-                            key={item.id}
-                            item={item}
-                            index={index}
-                            columnId={columnId}
-                            moveTask={moveTask}
-                            ItemType={ItemType}
-                        />
-                    ))}
+        <div className={`board-column-container ${isOver ? "hovered" : ""}`} ref={setNodeRef}>
+            <div >
+                <h3 className="task-name">{columnName}</h3>
+                <div className="task-list">
+                    {tasks.map((task) => {
+                        return (<TaskCard key={task.id} id={task.id} content={task.content} parent={columnId} />)
+                    })}
                 </div>
             </div>
             <div className="add-task-wrapper">
@@ -36,6 +22,5 @@ export default function BoardColumn({ columnId, column, moveTask, ItemType }) {
                 </button>
             </div>
         </div>
-
     );
 }

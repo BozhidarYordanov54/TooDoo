@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faTable, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
+import WorkspaceMenu from '../workspace/WorkspaceMenu';
+
 export default function WorkSpaceElement({ link }) {
 
     const handleFolding = (event) => {
@@ -23,9 +25,7 @@ export default function WorkSpaceElement({ link }) {
                 <FontAwesomeIcon icon={faChevronDown} />
             </button>
             <ul className='workspace-table folded'>
-                <li className='workspace-table'><NavLink to="/dashboard"><FontAwesomeIcon icon={faTable} />Boards</NavLink></li>
-                <li className='workspace-table'><NavLink to="/dashboard/projects"><FontAwesomeIcon icon={faUsers} />Members</NavLink></li>
-                <li className='workspace-table'><NavLink to="/dashboard/tasks"><FontAwesomeIcon icon={faGear} />Settings</NavLink></li>
+                <WorkspaceMenu/>
             </ul>
         </li>
     )

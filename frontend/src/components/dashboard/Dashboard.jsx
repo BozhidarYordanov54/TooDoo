@@ -8,24 +8,24 @@ import Workspaces from './Workspaces';
 const workspaces = [
     { id: 1, title: 'First workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
-            {title: 'My Second Board', imgUrl: '/images/sky.jpg', link: '/workspace/board/1'},
-            {title: 'My Third Board', imgUrl: '/images/lavender.jpg', link: '/workspace/board/1'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Second Board', imgUrl: '/images/sky.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Third Board', imgUrl: '/images/lavender.jpg', link: '/workspace/toodoo/1'},
         ] 
     },
     { id: 2, title: 'Second workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
-            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
-            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
         ] 
     },
     { id: 3, title: 'Third workspace', link: 'workspace', 
         boards: [
-            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: `/workspace/board/1`},
-            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
-            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
-            {title: 'My Fourth Board', imgUrl: '/images/sunset.jpg', link: '/workspace/board/1'},
+            {title: 'My First Board', imgUrl: '/images/sunset.jpg', link: `/workspace/toodoo/1`},
+            {title: 'My Second Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Third Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
+            {title: 'My Fourth Board', imgUrl: '/images/sunset.jpg', link: '/workspace/toodoo/1'},
         ] 
     },
 ];

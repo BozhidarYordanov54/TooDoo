@@ -1,17 +1,19 @@
 .site-header{
-    position: absolute;
+    position: fixed;
     top: 1em;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #272727;
+    background-color: rgba(39, 39, 39, 0.7);
+    backdrop-filter: blur(10px);
     width: 600px;
     height: 60px;
     border-radius: 999999px;
     font-size: 16px;
     border: 1px solid #555555;
+    z-index: 1000;
 }
 
 .logo{
