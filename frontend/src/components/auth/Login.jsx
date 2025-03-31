@@ -25,12 +25,12 @@ export default function Login() {
         e.preventDefault();
         setPending(true);
 
-        const response = await login(username, password);
-
-        if(response.status === 200){
+        try{
+            const response = await login(username, password);
             handleLogin(response.data);
-        } else {
-            setError(response.data.message);
+        } catch (error) {
+            setError(error.response?.data?.message || error.message || "An unexpected error occurred.");
+        } finally {
             setPending(false);
         }
     };

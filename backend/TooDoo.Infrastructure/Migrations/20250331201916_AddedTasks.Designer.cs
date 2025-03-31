@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TooDoo.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using TooDoo.Infrastructure.Data;
 namespace TooDoo.Infrastructure.Migrations
 {
     [DbContext(typeof(TooDooDbContext))]
-    partial class TooDooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250331201916_AddedTasks")]
+    partial class AddedTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,42 +156,6 @@ namespace TooDoo.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("TooDoo.Infrastructure.Data.Models.Board", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Boards");
-                });
-
-            modelBuilder.Entity("TooDoo.Infrastructure.Data.Models.BoardTask", b =>
-                {
-                    b.Property<string>("TaskId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BoardId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("TaskId", "BoardId");
-
-                    b.HasIndex("BoardId");
-
-                    b.ToTable("BoardTask");
                 });
 
             modelBuilder.Entity("TooDoo.Infrastructure.Data.Models.Task", b =>
@@ -366,25 +333,6 @@ namespace TooDoo.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TooDoo.Infrastructure.Data.Models.BoardTask", b =>
-                {
-                    b.HasOne("TooDoo.Infrastructure.Data.Models.Board", "Board")
-                        .WithMany()
-                        .HasForeignKey("BoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TooDoo.Infrastructure.Data.Models.Task", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Board");
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("TooDoo.Infrastructure.Data.Models.Task", b =>

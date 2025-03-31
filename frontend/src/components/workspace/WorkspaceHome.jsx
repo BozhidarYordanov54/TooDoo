@@ -8,6 +8,7 @@ import WorkspaceMenu from "./WorkspaceMenu";
 import '../../css/workspace.css'
 
 export default function WorkspaceHome() {
+    let isFree = true;
     return (
         <div className="workspace-home">
             <div className="workspace-header">
@@ -21,7 +22,23 @@ export default function WorkspaceHome() {
                             <p className="workspace-description">Free</p>
                         </div>
                     </div>
-                    <WorkspaceMenu/>
+                    <div className="workspace-menu-items">
+                        <WorkspaceMenu />
+                    </div>
+                    <div className="workspace-boards-list">
+                        
+                    </div>
+                    <div className="workspace-upgrade-wrapper">
+                        {isFree ? (
+                            <NavLink to="/upgrade" className="workspace-upgrade-btn">
+                                Upgrade to Pro
+                            </NavLink>
+                        ) : (
+                            <NavLink to="/upgrade" className="workspace-upgrade-btn">
+                                Upgrade to Pro
+                            </NavLink>
+                        )}
+                    </div>
                 </div>
             </div>
             <Routes>
