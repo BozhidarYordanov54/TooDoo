@@ -19,7 +19,6 @@ export default function TooDooBoard() {
             const destColumn = prevColumns[newColumnId];
             const taskItem = sourceColumn.items.find((item) => item.id === task.id);
 
-
             return {
                 ...prevColumns,
                 [task.columnId]: { ...sourceColumn, items: sourceColumn.items.filter((item) => item.id !== task.id) },
