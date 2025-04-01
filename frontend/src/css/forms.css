@@ -63,6 +63,7 @@
 
 .form .form-group>input[type="text"]:focus+label,
 .form .form-group>input[type="password"]:focus+label,
+.form .form-group>textarea:focus+label,
 .form .form-group>input[type="text"].filled+label,
 .form .form-group>input[type="password"].filled+label {
     top: 1em;
@@ -152,6 +153,27 @@
     font-weight: bold;
     text-decoration: none;
     transition: background 0.3s;
+}
+
+.form .form-group>textarea {
+    padding: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.form-group>input[type="file"]{
+    padding: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 300px;
+    background: #ffffff;
+}
+
+.form .form-group>textarea:focus+label{
+    top: -0.5em;
 }
 
 @keyframes rotateBackground {

@@ -5,10 +5,11 @@ import { faUsers, faTable, faGear, faPlus } from '@fortawesome/free-solid-svg-ic
 import CardLink from './CardLink';
 
 export default function Workspaces({ props }) {
+    // console.log(props);
     return (
-        <div className="workspace-wrapper">
+        <div key={props.id} className="workspace-wrapper">
             <div className="header-wrapper">
-                <h4>{props.title}</h4>
+                <h4>{props.name}</h4>
                 <div className="actions">
                     <button className="add-new-board">Add board <FontAwesomeIcon icon={faPlus} /></button>
                     <NavLink to={`/${props.link}/boards`}>Boards <FontAwesomeIcon icon={faTable} /></NavLink>
@@ -18,8 +19,9 @@ export default function Workspaces({ props }) {
             </div>
 
             <div className="boards-wrapper">
-                {props.boards.map((item) => {
-                    return <CardLink title={item.title} imgURL={item.imgUrl} link={item.link} />
+                {props.boards.map((item, index) => {
+                    // console.log(item);
+                    return <CardLink name={item.name} key={item.id || index} imgURL={item.imgUrl} link={item.link} />
                 })}
             </div>
         </div>

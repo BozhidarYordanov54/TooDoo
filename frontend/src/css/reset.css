@@ -10,6 +10,10 @@ body {
     background: #0a0a0a;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -22,12 +26,18 @@ select:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background: #333;
     border-radius: 10px;
+}
+
+textarea {
+    resize: vertical;
+    max-height: 400px;
+    overflow: hidden;
 }
