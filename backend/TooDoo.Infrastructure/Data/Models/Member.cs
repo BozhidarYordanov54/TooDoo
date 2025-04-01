@@ -8,9 +8,9 @@ using TooDoo.Infrastructure.Data.Enums;
 
 namespace TooDoo.Infrastructure.Data.Models
 {
-    public class Members
+    public class Member
     {
-        public Members()
+        public Member()
         {
             Id = Guid.NewGuid().ToString();
         }
@@ -26,9 +26,5 @@ namespace TooDoo.Infrastructure.Data.Models
         [Required]
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
-
-        [Required]
-        [ForeignKey(nameof(WorkspaceId))]
-        public Workspace Workspace { get; set; } = null!;
     }
 }

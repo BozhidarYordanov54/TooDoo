@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace TooDoo.Infrastructure.Data.Models
 {
     public class Workspace
@@ -18,6 +13,5 @@ namespace TooDoo.Infrastructure.Data.Models
         public string? Description { get; set; } = string.Empty;
         public string? OwnerId { get; set; } = string.Empty;
         public User? Owner { get; set; } = null!;
-        public List<Board> Boards { get; set; } = new List<Board>();
     }
 }

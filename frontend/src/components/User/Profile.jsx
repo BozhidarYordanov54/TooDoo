@@ -19,6 +19,8 @@ export default function Profile() {
 				setIsLoading(true);
 				const response = await axiosPrivate.get(fetchUrl);
 
+				console.log(response);
+
 				if (response.status === 200) {
 					setEmail(response.data.model.email);
 					setFirstName(response.data.model.firstName);

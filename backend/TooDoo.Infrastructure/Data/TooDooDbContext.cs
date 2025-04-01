@@ -17,13 +17,17 @@ namespace TooDoo.Infrastructure.Data
             builder.Entity<BoardTask>()
                 .HasKey(bt => new { bt.TaskId, bt.BoardId });
 
+            builder.Entity<WorkspaceMembers>()
+                .HasKey(wm => new { wm.MemberId, wm.WorkspaceId });
+
             base.OnModelCreating(builder);
         }
 
         public DbSet<Task> Tasks { get; set; } = null!;
         public DbSet<Board> Boards { get; set; } = null!;
         public DbSet<BoardTask> BoardTasks { get; set; } = null!;
-        
-
+        public DbSet<Workspace> Workspaces { get; set; } = null!;
+        public DbSet<Member> Members { get; set; } = null!;
+        public DbSet<WorkspaceMembers> WorkspaceMembers { get; set; } = null!;
     }
 }
