@@ -14,14 +14,16 @@ namespace TooDoo.Infrastructure.Data.Models
         {
             Id = Guid.NewGuid().ToString();
         }
+
+        [Key]
         public string Id { get; set; } = string.Empty;
-        public string UserId { get; set; } = string.Empty;
         [Required]
         public WorkspaceRole Role { get; set; } = WorkspaceRole.Member;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? DeletedAt { get; set; } = null;
 
+        public string UserId { get; set; } = string.Empty;
         [Required]
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
