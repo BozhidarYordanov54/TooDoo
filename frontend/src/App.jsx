@@ -28,7 +28,7 @@ export default function App() {
                 <Route path='/pricing' element={<Pricing />} />
                 <Route path='/user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path='/workspace/*' element={<PrivateRoute><WorkspaceHome/></PrivateRoute>} />
+                <Route path='/workspace/*' element={<PrivateRoute><WorkspaceHome /></PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
