@@ -39,6 +39,7 @@ namespace TooDoo.Extensions
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<IWorkspaceService, WorkspaceService>();
 
             return services;
         }
