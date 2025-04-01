@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TooDoo.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using TooDoo.Infrastructure.Data;
 namespace TooDoo.Infrastructure.Migrations
 {
     [DbContext(typeof(TooDooDbContext))]
-    partial class TooDooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250401182641_AddedTimeStatsToWorkspace")]
+    partial class AddedTimeStatsToWorkspace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
