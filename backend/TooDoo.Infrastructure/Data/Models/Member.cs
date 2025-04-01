@@ -18,7 +18,6 @@ namespace TooDoo.Infrastructure.Data.Models
         public string UserId { get; set; } = string.Empty;
         [Required]
         public WorkspaceRole Role { get; set; } = WorkspaceRole.Member;
-        public string WorkspaceId { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? DeletedAt { get; set; } = null;
