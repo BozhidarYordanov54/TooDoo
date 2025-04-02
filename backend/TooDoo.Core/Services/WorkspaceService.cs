@@ -11,6 +11,7 @@ namespace TooDoo.Core.Services
     public class WorkspaceService : IWorkspaceService
     {
         private const string WorkspaceImagePath = "public/images/workspaces/";
+        private string InviteLink = "https://localhost:5173/workspace/invite/";
         
         private readonly IRepository _repo;
 
@@ -34,14 +35,70 @@ namespace TooDoo.Core.Services
             await _repo.SaveChangesAsync();
         }
 
-        public Task<string> CreateInviteLinkAsync(string workspaceId)
+        public async Task CreateBoardAsync(BoardFormViewModel model)
         {
-            throw new NotImplementedException();
+            string? workspaceId = await _repo.GetAllAsync<Workspace>()
+                .Where(x => x.Name == model.WorkspaceName)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            
+
+            if (string.IsNullOrEmpty(workspaceId))
+            {
+                throw new ArgumentException("Workspace not found.");
+            }
+
+            var board = new Board
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                WorkspaceId = workspaceId,
+            };
+
+            await _repo.AddAsync(board);
+            await _repo.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<WorkspaceAllMembersViewModel>> GetAllMembersAsync(string workspaceId)
+        public async Task<string> CreateInviteLinkAsync(string workspaceName)
         {
-            throw new NotImplementedException();
+            string inviteLink = InviteLink + Guid.NewGuid().ToString();
+
+            var workspaceId = await _repo.GetAllAsync<Workspace>()
+                .Where(x => x.Name == workspaceName)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            var workspaceInviteLink = new WorkspaceInviteLink
+            {
+                Link = inviteLink,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                Count = 0,
+                WorkspaceId = workspaceId ?? string.Empty,
+            };
+
+            await _repo.AddAsync(workspaceInviteLink);
+            await _repo.SaveChangesAsync();
+
+            return inviteLink;
+        }
+
+        public async Task<IEnumerable<WorkspaceAllMembersViewModel>> GetAllMembersAsync(string workspaceName)
+        {
+            return await _repo.GetAllAsync<WorkspaceMembers>()
+                .Include(x => x.Member)
+                .Where(x => x.Workspace.Name == workspaceName)
+                .Select(x => new WorkspaceAllMembersViewModel
+                {
+                    Id = x.MemberId,
+                    Role = x.Member.Role,
+                    Username = x.Member.User.UserName ?? string.Empty,
+                    Name = x.Member.User.FirstName + x.Member.User.LastName ?? string.Empty,
+                    LastActive = x.Member.CreatedAt.ToString("dd/MM/yyyy"),
+                }).ToListAsync();
+                
         }
 
         public async Task<IEnumerable<WorkspaceAllViewModel>> GetAllWorkspacesAsync(string userId)
@@ -52,13 +109,26 @@ namespace TooDoo.Core.Services
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    OwnerId = x.OwnerId,
+                    OwnerId = x.OwnerId ?? string.Empty,
                     Boards = x.Boards.Select(b => new BoardAllViewModel
                     {
                         Id = b.Id,
                         Name = b.Name,
+                        ImageUrl = b.ImageUrl,
                     }).ToList()
                     
+                }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<BoardAllViewModel>> GetAllBoardsAsync(string workspaceName)
+        {
+            return await _repo.GetAllAsync<Board>()
+                .Where(x => x.Workspace.Name == workspaceName)
+                .Select(x => new BoardAllViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
                 }).ToListAsync();
         }
     }
