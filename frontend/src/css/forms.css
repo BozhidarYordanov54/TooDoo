@@ -41,6 +41,23 @@
     border-radius: 5px;
 }
 
+.form .form-group.images-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+}
+.form .form-group.images-wrapper .image-option{
+    width: 75px;
+    height: 75px;
+}
+
+.form .form-group.images-wrapper .image-option img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
 .form .form-group>input[type="text"]{
     width: 300px;
 }

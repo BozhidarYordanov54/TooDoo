@@ -1,18 +1,31 @@
 .workspace-home {
+    min-height: 100vh;
     display: flex;
     gap: 2em;
 }
 
-.workspace-home-container{
-    padding-right: 1em;
-    margin-top: 6em;
-    width: 100%;
+.workspace-home-container,
+.workspace-settings,
+.boards-wrapper.toodoo,
+.boards{
     display: flex;
+    width: 100%;
+    margin-top: 6em;
+}
+
+
+.boards {
+    flex-direction: column;
+    gap: 1em;
+}
+
+.workspace-home-container {
+    padding-right: 1em;
     flex-direction: column;
     color: #efefef;
 }
 
-.workspace-name.home{
+.workspace-name.home {
     padding: 1em 0.5em;
     color: #efefef;
     font-size: 1.5em;
@@ -20,13 +33,13 @@
     font-weight: 700;
 }
 
-.quick-action-buttons{
+.quick-action-buttons {
     display: flex;
     gap: 1em;
     margin-bottom: 2em;
 }
 
-.quick-action-buttons button{
+.quick-action-buttons button {
     text-decoration: none;
     outline: none;
     border: none;
@@ -41,16 +54,31 @@
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.quick-action-buttons button:hover{
+.quick-action-buttons button:hover {
     background: #4e4e4e;
     color: #ffffff;
-    transform: scale(1.05) rotate(3deg);
+    transform: scale(1.05);
+}
+
+.quick-action-button.invite {
+    background: #b392f0;
+    color: #ffffff;
+}
+
+.quick-action-button.invite:hover {
+    background: #866efb;
+    color: #ffffff;
+}
+
+.quick-action-buttons button:active {
+    transform: scale(0.95);
 }
 
 .workspace-header {
     width: 300px;
     padding-top: 1em;
-    background: #2e2e2e;
+    background: rgb(30, 30, 30);
+    background: linear-gradient(90deg, rgba(30, 30, 30, 1) 50%, rgba(179, 146, 240, 0) 100%);
 }
 
 .workspace-menu-wrapper {
@@ -103,6 +131,18 @@
     flex-direction: column;
 }
 
+.workspace-home .no-data {
+    text-align: center;
+    font-size: 1.5em;
+    color: #efefef;
+}
+
+.member-header {
+    text-align: center;
+    color: #efefef;
+    font-size: 24px;
+}
+
 .workspace-name-img {
     display: flex;
     justify-content: center;
@@ -113,10 +153,11 @@
     background: #4e4e4e;
 }
 
-.boards-wrapper.toodoo {
-    display: flex;
+.boards .board-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1em;
     width: 100%;
-    margin-top: 6em;
 }
 
 .background-container {
@@ -227,7 +268,8 @@
     background: #4e4e4e;
 }
 
-.add-task-button {
+.add-task-button,
+.add-new-board {
     width: 100%;
     height: 70px;
     background: #3b3b3b;
@@ -235,6 +277,30 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.add-new-board {
+    height: 100%;
+    background: #1b1b1b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    color: #3f3f3f;
+    font-size: 1.2em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.add-new-board .btn-text{
+    font-size: 0.8em;
+}
+
+.add-new-board:hover {
+    background: #3e3e3e;
+    color: #fff;
 }
 
 .add-task-button:hover {
@@ -289,7 +355,8 @@
     margin-bottom: 1rem;
 }
 
-.form.add-workspace {
+.form.add-workspace,
+.form.add-board {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -297,7 +364,10 @@
 }
 
 .form.add-workspace .form-group>input,
-.form.add-workspace .form-group>textarea {
+.form.add-workspace .form-group>textarea,
+.form.add-board .form-group>input,
+.form.add-board .form-group>textarea,
+.form.add-workspace .form-group.image-wrapper{
     width: 450px;
 }
 
@@ -484,7 +554,7 @@
     grid-area: member-activity;
 }
 
-.stat-card{
+.stat-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
