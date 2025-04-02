@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom"
 
-export default function CardLink({ link, name, imgURL }) {
+export default function CardLink({ workspaceName, name, imgURL }) {
     return (
-        <NavLink to={`${link}`}>
+        <NavLink to={`/workspace/${workspaceName}/toodoo/${name}`}>
             <div className="template board">
                 <div className="img-wrapper">
                     <img src={imgURL} alt="template" />

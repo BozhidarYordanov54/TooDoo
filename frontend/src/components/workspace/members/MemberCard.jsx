@@ -1,11 +1,11 @@
-export default function MemberCard({ id, name, username }) {
+export default function MemberCard({ name, username, lastActive }) {
     return (
         <div className="member">
             <div className="member-names">
-                <p className="member-name">Member name</p>
+                <p className="member-name">{name}</p>
                 <div className="member-info">
-                    <p>@Username</p>
-                    <p>Last Active</p>
+                    <p>@{username}</p>
+                    <p>Last Active - {lastActive}</p>
                 </div>
             </div>
             <div className="actions">
@@ -18,7 +18,7 @@ export default function MemberCard({ id, name, username }) {
                 <div className="btn-wrapper">
                     <button className="btn remove">Remove</button>
                     <div className="btn-info">
-                        <p>Banning a user will result in him not able to join this worskapce</p>
+                        <p>Banning a user will result in him not able to join this workspace</p>
                     </div>
                 </div>
                 <div className="btn-wrapper">

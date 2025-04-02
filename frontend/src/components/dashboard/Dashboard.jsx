@@ -3,9 +3,10 @@ import '../../css/dashboard-home.css';
 import WorkSpaceElement from './WorkSpaceElement';
 import LatestBoard from './LatestBoard';
 import Workspaces from './Workspaces';
-import AddWorkspaceForm from './AddWorkspaceForm';
+import AddWorkspaceForm from '../forms/AddWorkspaceForm';
 import { useState, useEffect } from 'react';
 import { axiosPrivate } from '../../api/axios';
+import { useWorkspaces } from '../../api/workspaceApi';
 
 
 export default function Dashboard() {
@@ -26,6 +27,7 @@ export default function Dashboard() {
         fetchData();
     }, [isLoading]);
 
+
     const handleFormOpen = () => {
         document.querySelector('.form-wrapper').classList.add('active');
         document.body.classList.add('no-scroll');
@@ -37,7 +39,7 @@ export default function Dashboard() {
             console.warn("Form wrapper not found");
             return;
         }
-        
+
         formWrapper.classList.remove('active');
         document.body.classList.remove('no-scroll');
     };
@@ -49,7 +51,7 @@ export default function Dashboard() {
         }
         catch (error) {
             console.error('Error adding workspace:', error);
-        } finally{
+        } finally {
             setIsLoading(false);
         }
     }
@@ -101,7 +103,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            
+
         </>
     )
 }
