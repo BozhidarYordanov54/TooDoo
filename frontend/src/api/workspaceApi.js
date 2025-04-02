@@ -24,13 +24,16 @@ export const useDashboard = () => {
 }
 
 export const useWorkspaces = () => {
-    const createBoard = async (workspaceName) => {
+    const createBoard = async (workspaceName, boardName, boardDescription, imageUrl) => {
         try {
-            const response = await axiosPrivate.post('api/workspace/createBoard', {
-                name: workspaceName,
+            const response = await axiosPrivate.post(`api/workspace/createBoard/${workspaceName}`, {
+                workspaceName: workspaceName,
+                name: boardName,
+                description: boardDescription,
+                imageUrl: imageUrl,
             }, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 }
             })
 
@@ -60,15 +63,11 @@ export const useWorkspaces = () => {
         }
     }
 
-    const createInviteLink = async (workspaceId) => {
+    const createInviteLink = async (workspaceName) => {
         try {
-            const response = await axiosPrivate.post('api/workspace/createInviteLink', {
-                workspaceId: workspaceId,
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+            const response = await axiosPrivate.post('api/workspace/createInvite', 
+                {headers: {ContentType: 'application/json'}}, 
+                { params: { workspaceName: workspaceName } })
 
             return response;
         } catch (error) {
@@ -77,14 +76,19 @@ export const useWorkspaces = () => {
     }
 
     const getWorkspaceMembers = async (workspaceId) => {
+        console.log(workspaceId);
         try {
-            const response = await axiosPrivate.get(`api/workspace/getWorkspaceMembers/${workspaceId}`);
+            const response = await axiosPrivate.get(`api/workspace/members/${workspaceId}`, {
+                headers: { ContentType: 'application/json' }
+            });
+
+            console.log(response);
 
             return response;
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const getWorkpsaceSettings = async (workspaceId) => {
         try {
@@ -96,9 +100,12 @@ export const useWorkspaces = () => {
         }
     }
 
-    const getWorkspaceBoards = async (workspaceId) => {
+    const getWorkspaceBoards = async (workspaceName) => {
         try {
-            const response = await axiosPrivate.get(`api/workspace/getWorkspaceBoards/${workspaceId}`);
+            const response = await axiosPrivate.get(`api/workspace/getWorkspaceBoards/${workspaceName}`,
+                { headers: { ContentType: 'application/json' } },
+                { params: { workspaceName: workspaceName } }
+            );
 
             return response;
         } catch (error) {
