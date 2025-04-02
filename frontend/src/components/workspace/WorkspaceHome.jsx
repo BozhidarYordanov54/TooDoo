@@ -1,13 +1,39 @@
+import { useState } from 'react';
 import * as React from 'react';
 import { BarChart, PieChart, LineChart } from "@mui/x-charts"
+import { useWorkspaces } from '../../api/workspaceApi';
 
-export default function WorkspaceHome({workspaceName}) {
+export default function WorkspaceHome({ workspaceName }) {
+    const [inviteLink, setInviteLink] = useState('');
+    const { createInviteLink } = useWorkspaces();
+
+    const handleCreateInviteLink = async () => {
+        try {
+            const response = await createInviteLink(workspaceName);
+            setInviteLink(response.data.inviteLink);
+
+        } catch (error) {
+            console.error("Error creating invite link:", error);
+        }
+    }
+
+    const handleCopyInviteLink = async () => {
+        if (inviteLink) {
+            try {
+                await navigator.clipboard.writeText(inviteLink);
+                
+            } catch (error) {
+                console.error('Failed to copy invite link:', error);
+            }
+        }
+    };
+
     return (
         <div className="workspace-home-container">
             <div className="header-container">
                 <div className="workspace-header-home">
                     <div className="workspace-name-wrapper">
-                        <h1 className="workspace-home">{workspaceName}</h1>
+                        <h1 className="workspace-home-name">{workspaceName}</h1>
                     </div>
                 </div>
                 <div className="quick-action-buttons">
@@ -15,7 +41,19 @@ export default function WorkspaceHome({workspaceName}) {
                     <button className="quick-action-button">Create Task</button>
                     <button className="quick-action-button">Create Note</button>
                     <button className="quick-action-button">Create Event</button>
-                    <button className="quick-action-button">Invite member</button>
+                    <div className="btn-invite-wrapper">
+                        {inviteLink ? 
+                        (<button 
+                            type='button' 
+                            className="quick-action-button invite" 
+                            onClick={handleCopyInviteLink}> Copy link
+                        </button>) : 
+                        (<button 
+                            type='button' 
+                            className="quick-action-button" 
+                            onClick={handleCreateInviteLink}>Invite members
+                        </button>)}
+                    </div>
                 </div>
             </div>
             <div className="container">

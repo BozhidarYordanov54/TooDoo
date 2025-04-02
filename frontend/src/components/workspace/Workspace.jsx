@@ -7,6 +7,7 @@ import WorkspaceMenu from "./WorkspaceMenu";
 
 import '../../css/workspace.css'
 import WorkspaceHome from "./WorkspaceHome";
+import Boards from "./board/Boards";
 
 export default function Workspace() {
     const { workspaceName } = useParams();
@@ -48,10 +49,11 @@ export default function Workspace() {
             </div>
             <Routes>
                 <Route path="/" element={<WorkspaceHome workspaceName={workspaceName} />} />
-                <Route path="boards" element={<div>Boards</div>} />
-                <Route path="toodoo/:boardId" element={<TooDooBoard />} />
+                <Route path="boards" element={<Boards />} />
                 <Route path="members" element={<WorkspaceMembers />} />
                 <Route path="settings" element={<WorkspaceSettings />} />
+                <Route path="toodoo/:boardId" element={<TooDooBoard />} />
+                <Route path="invite/:workspaceInvite" element={<TooDooBoard />} />
             </Routes>
         </div>
     )
