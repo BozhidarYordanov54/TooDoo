@@ -236,7 +236,7 @@
     border-image: linear-gradient(to right, transparent, #dc4c4c, transparent) 1;
 }
 
-.task-card.inProgress {
+.task-card.inprogress {
     border-bottom: 1px solid;
     border-image: linear-gradient(to right, transparent, #f0a500, transparent) 1;
 }
