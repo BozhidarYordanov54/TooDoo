@@ -40,12 +40,12 @@
     border: none;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: start;
     gap: 0.5em;
     font-weight: 500;
     letter-spacing: 0.5px;
     margin-bottom: 1em;
-    padding: 0.5em;
+    padding: 0.5em 1em;
     background: #2e2e2e;
     width: 100%;
     color: #c7c7c7;
@@ -54,10 +54,15 @@
 }
 
 .workspace-name .workspace-symbol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #b392f0;
     color: #ffffff;
     padding: 3px 5px;
     border-radius: 5px;
+    width: 25px;
+    height: 25px;
 }
 
 .workspace-name svg {

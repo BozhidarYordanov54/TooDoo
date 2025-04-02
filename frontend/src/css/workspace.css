@@ -6,29 +6,43 @@
 .workspace-header {
     height: 100vh;
     width: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    padding-left: 1em;
     padding-top: 1em;
     background: #2e2e2e;
 }
 
 .workspace-menu-wrapper {
-    color: #ffffff;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    color: #efefef;
 }
+
+.workspace-menu-items{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em 0.5em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.workspace-menu-items a {
+    text-decoration: none;
+    color: #efefef;
+}
+
 
 .workspace-menu-header {
     display: flex;
-    gap: 1em;
     align-items: center;
+    text-decoration: none;
+    gap: 1em;
     width: 100%;
     border-top: 1px solid #4e4e4e;
     border-bottom: 1px solid #4e4e4e;
-    padding: 1em 0;
+    color: #efefef;
+    padding: 1em 0.5em;
 }
 
 .workspace-menu-header .workspace-name {
@@ -104,6 +118,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 70px;
+    color: #efefef;
+    font-size: 1em;
     background: #3e3e3e;
     border-radius: 10px;
     padding: 1em;
@@ -116,6 +136,15 @@
     padding: 0.5em 0.75em;
     font-size: 1em;
     font-weight: bold;
+}
+
+.task-info{
+    text-align: left;
+}
+
+.task-info .task-title {
+    color: #fff;
+    margin-bottom: 0.3em;
 }
 
 .task-card.toodoo {

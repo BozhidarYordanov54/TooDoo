@@ -1,4 +1,4 @@
-import { NavLink, Routes, Route } from "react-router-dom"
+import { NavLink, Routes, Route, useParams } from "react-router-dom"
 
 import WorkspaceMembers from "./members/WorkspaceMembers";
 import WorkspaceSettings from "./settings/WorkspaceSettings";
@@ -8,25 +8,29 @@ import WorkspaceMenu from "./WorkspaceMenu";
 import '../../css/workspace.css'
 
 export default function WorkspaceHome() {
+    const { workspaceName } = useParams();
+
     let isFree = true;
     return (
         <div className="workspace-home">
             <div className="workspace-header">
                 <div className="workspace-menu-wrapper">
-                    <div className="workspace-menu-header">
-                        <div className="workspace-name-img">
-                            <p className="namespace-letter">W</p>
+                    <div className="user-menu">
+                        <NavLink to={`/workspace/${workspaceName}`} className="workspace-menu-header">
+                            <div className="workspace-name-img">
+                                <p className="namespace-letter">W</p>
+                            </div>
+                            <div className="workspace-name-wrapper">
+                                <p className="workspace-name">Workspace name</p>
+                                <p className="workspace-description">Free</p>
+                            </div>
+                        </NavLink>
+                        <div className="workspace-menu-items">
+                            <WorkspaceMenu name={workspaceName}/>
                         </div>
-                        <div className="workspace-name-wrapper">
-                            <p className="workspace-name">Workspace name</p>
-                            <p className="workspace-description">Free</p>
+                        <div className="workspace-boards-list">
+
                         </div>
-                    </div>
-                    <div className="workspace-menu-items">
-                        <WorkspaceMenu />
-                    </div>
-                    <div className="workspace-boards-list">
-                        
                     </div>
                     <div className="workspace-upgrade-wrapper">
                         {isFree ? (
@@ -42,10 +46,10 @@ export default function WorkspaceHome() {
                 </div>
             </div>
             <Routes>
-                <Route path="boards/:workspaceID" element={<div>Boards</div>} />
+                <Route path="boards" element={<div>Boards</div>} />
                 <Route path="toodoo/:boardId" element={<TooDooBoard />} />
-                <Route path="members/:workspaceID" element={<WorkspaceMembers />} />
-                <Route path="settings/:workspaceID" element={<WorkspaceSettings />} />
+                <Route path="members" element={<WorkspaceMembers />} />
+                <Route path="settings" element={<WorkspaceSettings />} />
             </Routes>
         </div>
     )

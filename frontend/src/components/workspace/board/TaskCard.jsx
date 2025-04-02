@@ -10,7 +10,7 @@ export default function TaskCard({ id, content, parent }) {
 
     return (
         <>
-            <div ref={setNodeRef} style={style} {...listeners} {...attributes} className={`task-card ${parent}  ${content.priority.toLowerCase()} ${transform ? "dragging" : ""}`}>
+            <button type="button" ref={setNodeRef} style={style} {...listeners} {...attributes} className={`task-card ${parent}  ${content.priority.toLowerCase()} ${transform ? "dragging" : ""}`}>
                 <div className="task-info">
                     <h4 className="task-title">{content.title}</h4>
                     <span className="task-due-date">Due: {content.dueDate}</span>
@@ -33,7 +33,7 @@ export default function TaskCard({ id, content, parent }) {
                         </defs>
                     </svg>
                 </div>
-            </div>
+            </button>
             
         </>
     );

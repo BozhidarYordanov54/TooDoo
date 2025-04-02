@@ -31,7 +31,7 @@ const initialTasks = [
     },
 ];
 
-import imageURL from '../../../../public/images/sky.jpg';
+import imageURL from '/images/sky.jpg';
 
 export default function TooDooBoard() {
     const [tasks, setTasks] = useState(initialTasks);
