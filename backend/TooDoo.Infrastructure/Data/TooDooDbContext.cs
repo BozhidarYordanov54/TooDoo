@@ -20,6 +20,12 @@ namespace TooDoo.Infrastructure.Data
             builder.Entity<WorkspaceMembers>()
                 .HasKey(wm => new { wm.MemberId, wm.WorkspaceId });
 
+            builder.Entity<Workspace>()
+                .HasOne(w => w.Owner)
+                .WithMany()
+                .HasForeignKey(w => w.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(builder);
         }
 
@@ -29,5 +35,6 @@ namespace TooDoo.Infrastructure.Data
         public DbSet<Workspace> Workspaces { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<WorkspaceMembers> WorkspaceMembers { get; set; } = null!;
+        public DbSet<WorkspaceInviteLink> WorkspaceInviteLinks { get; set; } = null!;
     }
 }

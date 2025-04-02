@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TooDoo.Infrastructure.Data.Models
 {
@@ -19,5 +20,10 @@ namespace TooDoo.Infrastructure.Data.Models
         public string? ImageUrl { get; set; } = string.Empty;
 
         public string? Description { get; set; } = string.Empty;
+
+        public string WorkspaceId { get; set; } = string.Empty;
+        [Required]
+        [ForeignKey(nameof(WorkspaceId))]
+        public virtual Workspace Workspace { get; set; } = null!;
     }
 }

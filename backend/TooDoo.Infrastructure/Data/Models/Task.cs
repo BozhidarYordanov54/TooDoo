@@ -44,5 +44,9 @@ namespace TooDoo.Infrastructure.Data.Models
         [Required]
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
+
+        public string? AssignedTo { get; set; }
+        [ForeignKey(nameof(AssignedTo))]
+        public User? AssignedUser { get; set; } = null!;
     }
 }
