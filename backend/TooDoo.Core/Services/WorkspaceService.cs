@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using TooDoo.Core.Contracts;
 using TooDoo.Core.Models.Boards;
+using TooDoo.Core.Models.Tasks;
 using TooDoo.Core.Models.Workspace;
 using TooDoo.Infrastructure.Common;
 using TooDoo.Infrastructure.Data.Models;
 using Task = System.Threading.Tasks.Task;
+using CustomTask = TooDoo.Infrastructure.Data.Models.Task;
+using TooDoo.Infrastructure.Data.Enums;
+using TaskStatus = TooDoo.Infrastructure.Data.Enums.TaskStatus;
 
 namespace TooDoo.Core.Services
 {
@@ -12,7 +16,7 @@ namespace TooDoo.Core.Services
     {
         private const string WorkspaceImagePath = "public/images/workspaces/";
         private string InviteLink = "https://localhost:5173/workspace/invite/";
-        
+
         private readonly IRepository _repo;
 
         public WorkspaceService(IRepository repo)
@@ -42,7 +46,7 @@ namespace TooDoo.Core.Services
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 
-            
+
 
             if (string.IsNullOrEmpty(workspaceId))
             {
@@ -98,7 +102,7 @@ namespace TooDoo.Core.Services
                     Name = x.Member.User.FirstName + x.Member.User.LastName ?? string.Empty,
                     LastActive = x.Member.CreatedAt.ToString("dd/MM/yyyy"),
                 }).ToListAsync();
-                
+
         }
 
         public async Task<IEnumerable<WorkspaceAllViewModel>> GetAllWorkspacesAsync(string userId)
@@ -116,7 +120,7 @@ namespace TooDoo.Core.Services
                         Name = b.Name,
                         ImageUrl = b.ImageUrl,
                     }).ToList()
-                    
+
                 }).ToListAsync();
         }
 
@@ -129,6 +133,61 @@ namespace TooDoo.Core.Services
                     Id = x.Id,
                     Name = x.Name,
                     ImageUrl = x.ImageUrl,
+                }).ToListAsync();
+        }
+
+        public async Task CreateTaskAsync(TaskFormViewModel model)
+        {
+            var boardId = await _repo.GetAllAsync<Board>()
+                .Where(x => x.Name == model.BoardName)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(boardId))
+            {
+                throw new ArgumentException("Board not found.");
+            }
+
+            var task = new CustomTask{
+                Title = model.TaskTitle,
+                Description = model.TaskDescription,
+                Priority = model.Priority switch
+                {
+                    "High" => TaskPriority.High,
+                    "Medium" => TaskPriority.Medium,
+                    "Low" => TaskPriority.Low,
+                    _ => TaskPriority.Low,
+                },
+                BoardId = boardId,
+                AssignedTo = model.AssignedTo,
+                DueDate = model.DueDate,
+                Status = TaskStatus.TooDoo,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsCompleted = false,
+                CompletedAt = null,
+                UserId = model.CreatedBy,
+            };
+
+
+            await _repo.AddAsync(task);
+            await _repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TaskAllViewModel>> GetAllTasksAsync(string boardName)
+        {
+            return await _repo.GetAllAsync<CustomTask>()
+                .Where(x => x.Board.Name == boardName)
+                .Select(x => new TaskAllViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Priority = x.Priority.ToString(),
+                    Status = x.Status.ToString(),
+                    AssignedTo = x.AssignedTo ?? string.Empty,
+                    CreatedBy = x.UserId,
+                    DueDate = x.DueDate,
                 }).ToListAsync();
         }
     }

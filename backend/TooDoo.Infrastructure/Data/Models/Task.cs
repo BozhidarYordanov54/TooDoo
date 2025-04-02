@@ -48,5 +48,10 @@ namespace TooDoo.Infrastructure.Data.Models
         public string? AssignedTo { get; set; }
         [ForeignKey(nameof(AssignedTo))]
         public User? AssignedUser { get; set; } = null!;
+
+        public string BoardId { get; set; } = string.Empty;
+        [Required]
+        [ForeignKey(nameof(BoardId))]
+        public Board Board { get; set; } = null!;
     }
 }

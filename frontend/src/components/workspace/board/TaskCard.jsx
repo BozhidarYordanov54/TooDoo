@@ -1,6 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 
-export default function TaskCard({ id, content, parent }) {
+export default function TaskCard({ id, content, status }) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
     let isDragging = false;
 
@@ -10,7 +10,7 @@ export default function TaskCard({ id, content, parent }) {
 
     return (
         <>
-            <button type="button" ref={setNodeRef} style={style} {...listeners} {...attributes} className={`task-card ${parent}  ${content.priority.toLowerCase()} ${transform ? "dragging" : ""}`}>
+            <button type="button" ref={setNodeRef} style={style} {...listeners} {...attributes} className={`task-card ${parent} ${content.priority.toLowerCase()} ${transform ? "dragging" : ""}`}>
                 <div className="task-info">
                     <h4 className="task-title">{content.title}</h4>
                     <span className="task-due-date">Due: {content.dueDate}</span>

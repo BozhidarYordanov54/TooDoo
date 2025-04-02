@@ -52,7 +52,7 @@ export default function Workspace() {
                 <Route path="boards" element={<Boards />} />
                 <Route path="members" element={<WorkspaceMembers />} />
                 <Route path="settings" element={<WorkspaceSettings />} />
-                <Route path="toodoo/:boardId" element={<TooDooBoard />} />
+                <Route path="toodoo/:boardName" element={<TooDooBoard />} />
                 <Route path="invite/:workspaceInvite" element={<TooDooBoard />} />
             </Routes>
         </div>

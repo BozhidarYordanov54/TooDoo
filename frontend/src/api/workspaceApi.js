@@ -43,17 +43,18 @@ export const useWorkspaces = () => {
         }
     }
 
-    const createTask = async (boardId, taskName, taskDescription, taskDueDate, taskPriority) => {
+    const createTask = async (boardName, taskTitle, taskDescription, taskDueDate, taskPriority, assignedUserId) => {
         try {
             const response = await axiosPrivate.post('api/workspace/createTask', {
-                boardId: boardId,
-                name: taskName,
-                description: taskDescription,
+                boardName: boardName,
+                taskTitle: taskTitle,
+                taskDescription: taskDescription,
                 dueDate: taskDueDate,
                 priority: taskPriority,
+                assignedUserId: assignedUserId,
             }, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 }
             })
 
@@ -81,8 +82,6 @@ export const useWorkspaces = () => {
             const response = await axiosPrivate.get(`api/workspace/members/${workspaceId}`, {
                 headers: { ContentType: 'application/json' }
             });
-
-            console.log(response);
 
             return response;
         } catch (error) {
@@ -124,9 +123,9 @@ export const useWorkspaces = () => {
 }
 
 export const useBoard = () => {
-    const getBoardTasks = async (boardId) => {
+    const getBoardTasks = async (boardName) => {
         try {
-            const response = await axiosPrivate.get(`api/workspace/getBoardTasks/${boardId}`);
+            const response = await axiosPrivate.get(`api/workspace/getBoardTasks/${boardName}`);
 
             return response;
         } catch (error) {

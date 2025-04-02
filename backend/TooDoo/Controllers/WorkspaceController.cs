@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TooDoo.Core.Contracts;
 using TooDoo.Core.Models.Boards;
+using TooDoo.Core.Models.Tasks;
 using TooDoo.Core.Models.Workspace;
 using TooDoo.Extensions;
 
@@ -119,6 +120,41 @@ namespace TooDoo.Controllers
 
             await _workspaceService.CreateBoardAsync(model);
             return Ok(new { message = "Board created successfully.", model = model });
+        }
+
+        [HttpPost("createTask")]
+        public async Task<IActionResult> CreateTask(TaskFormViewModel model)
+        {
+            string userId = User.GetUserId() ?? string.Empty;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID is required.");
+            }
+
+            model.CreatedBy = userId;
+
+            await _workspaceService.CreateTaskAsync(model);
+            return Ok(new { message = "Task created successfully.", model = model });
+        }
+
+        [HttpGet("getBoardTasks/{boardName}")]
+        public async Task<IActionResult> GetBoardTasks(string boardName)
+        {
+            string userId = User.GetUserId() ?? string.Empty;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID is required.");
+            }
+
+            var tasks = await _workspaceService.GetAllTasksAsync(boardName);
+            if (tasks == null || !tasks.Any())
+            {
+                return NotFound("No tasks found for the specified board.");
+            }
+
+            return Ok(new { tasks = tasks });
         }
     }
 }
