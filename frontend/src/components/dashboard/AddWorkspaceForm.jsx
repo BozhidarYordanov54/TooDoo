@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useWorkspace } from "../../api/workspaceApi";
+import { useDashboard } from "../../api/workspaceApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ export default function AddWorkspaceForm({ handlerClose, addWorkspace, isLoading
     const [workspaceName, setWorkspaceName] = useState('');
     const [workspaceDescription, setWorkspaceDescription] = useState('');
 
-    const { createWorkspace } = useWorkspace();
+    const { createWorkspace } = useDashboard();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

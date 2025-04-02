@@ -15,7 +15,7 @@ import Register from "./components/auth/Register";
 import Profile from './components/User/Profile';
 import Dashboard from './components/dashboard/Dashboard';
 import Pricing from './components/pricing/Pricing';
-import WorkspaceHome from './components/workspace/WorkspaceHome';
+import Workspace from './components/workspace/Workspace';
 
 export default function App() {
     return (
@@ -28,7 +28,7 @@ export default function App() {
                 <Route path='/pricing' element={<Pricing />} />
                 <Route path='/user/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path='/workspace/:workspaceName/*' element={<PrivateRoute><WorkspaceHome /></PrivateRoute>} />
+                <Route path='/workspace/:workspaceName/*' element={<PrivateRoute><Workspace /></PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
